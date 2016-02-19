@@ -14,13 +14,18 @@ class CreateTargetGroupTable extends Migration
     {
         Schema::create('targetgroups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned(); // admin of the group
+            $table->integer('user_id')->unsigned()->nullable(); // admin of the group
             $table->string('name', 64);
             $table->string('description', 1024);
             $table->boolean('allowTwoReservationsInsideGroupBySameUser');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        // Now that targetgroups is up we can add foreign key to users
+        Schema::table('users', function(Blueprint $table) {
+            //$table->foreign('targetgroup_id')->references('id')->on('targetgroups')->onDelete('cascade');
         });
 
         

@@ -4,16 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Target extends Model
+class Pendinggroupjoinrequest extends Model
 {
     //
 
-    public function reservations() {
-    	return $this->hasMany('App\Reservation');
+    public function user() {
+    	return $this->belongsTo('App\User');
     }
 
     public function targetgroup() {
     	return $this->belongsTo('App\Targetgroup');
     }
+
 
 }

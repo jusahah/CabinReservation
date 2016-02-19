@@ -20,8 +20,12 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
 
             // App specific stuff
+            $table->integer('targetgroup_id')->unsigned()->nullable();
             $table->boolean('emailNotificationsOn');
             $table->timestamps();
+
+            $table->foreign('targetgroup_id')->references('id')->on('targetgroups')->onDelete('cascade');
+            $table->index('targetgroup_id');
         });
     }
 
