@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Target;
 
-class EnsureUserHasTargetGroup
+class TargetPartOfTargetGroup
 {
     /**
      * Handle an incoming request.
@@ -15,13 +16,14 @@ class EnsureUserHasTargetGroup
      */
     public function handle($request, Closure $next)
     {
+        // Previous one has set an input variable 'targetgroup_id'
 
-        $user = \Auth::user();
-        if (!$user->targetgroup_id) {
-            return redirect('member/home')->with('error', 'Sinun täytyy olla varausryhmän jäsen.');
+        $tgid = $request->input('targetgroup_id');
+        $target = Target::findOrFail($request->kohdeID);
+
+        if ($target->targetgroup_id != $tgid) {
+            return response('Unauthorized.', 401);
         }
-        // Bind so we can use it in the controllers
-        \Input::merge(['targetgroup_id' => $user->targetgroup_id]);
         return $next($request);
     }
 }
