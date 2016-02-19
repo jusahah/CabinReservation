@@ -33,12 +33,25 @@ $factory->define(App\Target::class, function (Faker\Generator $faker) {
     return [
         'targetgroup_id' => rand(1, 7),
         'name' => $faker->name,
-        'description' => $faker->sentence,
+        'description' => $faker->paragraph,
         'maxReservationLength' => rand(1, 10),
         'minReservationLength' => 1,
         'emailWhenSomebodyReserves' => 1,
         'emailWhenSomebodyCancels' => 1,
         'emailWhenGeneralAnnouncement' => 1,
         'allowTwoReservationsBySameUser' => 0
+    ];
+});
+
+
+$factory->define(App\Reservation::class, function (Faker\Generator $faker) {
+	$u = rand(1, 15);
+    return [
+        'user_id' => $u,
+        'original_user_id' => $u,
+        'target_id' => rand(1,6),
+        'startdate' => $faker->dateTimeThisMonth(),
+        'enddate' => $faker->dateTimeThisMonth(),
+        'notes' => $faker->paragraph
     ];
 });

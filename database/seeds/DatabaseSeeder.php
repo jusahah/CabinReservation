@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(TargetgroupSeeder::class);
         $this->call(TargetSeeder::class);
+        $this->call(ReservationSeeder::class);
 
         Model::reguard();
     }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TargetSeeder extends Seeder
+class ReservationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,6 @@ class TargetSeeder extends Seeder
      */
     public function run()
     {
-    	// Create 30 fake instances of targets
-        factory('App\Target', 30)->create();
-
+        factory('App\Reservation', 10)->create();
     }
 }
