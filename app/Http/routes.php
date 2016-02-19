@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			Route::post('kohteet/{kohdeID}/varaukset', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
 
 			Route::get('kohteet/{kohdeID}/varaukset/{varausID}', ['as' => 'varausinfo', 'uses' => 'ReservationController@showReservation']);
-			Route::delete('kohteet/{kohdeID}/varaukset/{varausID}', ['as' => 'peruvaraus', 'uses' => 'ReservationController@deleteReservation']);
+			Route::get('kohteet/{kohdeID}/varaukset/{varausID}/peru', ['as' => 'peruvaraus', 'uses' => 'ReservationController@deleteReservation']);
 
 			Route::get('kohteet/{kohdeID}/ilmoitukset', ['as' => 'kohteenilmoitukset', 'uses' => 'AnnouncementController@targetAnnouncements']);
 			Route::post('kohteet/{kohdeID}/ilmoitukset', ['as' => 'luoilmoitus', 'uses' => 'AnnouncementController@createAnnouncement']);

@@ -7,10 +7,93 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Target;
+use App\Reservation;
+
 class ReservationController extends Controller
 {
+    protected function checkReservationOverlap($kohdeID, $startDate, $endDate) {
 
-    
+        $reservations = Reservation::where('target_id', $kohdeID)->where('enddate', '>=', $startDate)->get();
+
+        foreach ($reservations as $key => $reservation) {
+            if ($endDate < $reservation->startdate || $startDate > $reservation->enddate) {
+                true;
+            } else {
+                // Overlap!
+                return false;
+            }
+        }
+
+        return true;
+
+
+    }
+
+    public function targetReservations(Request $request, $kohdeID) {
+        $target = Target::findOrFail($kohdeID);
+        return $target->reservations()->get();
+    }
+
+    public function showReservationCreation(Request $request, $kohdeID) {
+        $target = Target::findOrFail($kohdeID);
+        return view('member/createreservation')->with('target', $target);
+    }
+
+    // POST route
+    public function createReservation(Request $request, $kohdeID) {
+        $validator = \Validator::make($request->all(), Reservation::validationRules());
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();            
+        }
+        // First checkpoint of validations passed
+        // We still have to check that reservation does not overlap with other reservations
+        // And check that user has no other reservations active if allowTwoReservationsBySameUser is set false
+        $input = $request->all();
+
+        $startDate = $input['startdate'];
+        $endDate   = $input['enddate'];
+
+        if (!$this->checkReservationOverlap($kohdeID, $startDate, $endDate)) {
+            $request->session()->flash('operationfail', 'Varausta epäonnistui. Tarkista päivämäärät. Et voi varata päivälle, jolle on jo varaus olemassa.');
+            return back()->withInput();
+
+        }
+
+        $input['user_id'] = \Auth::id();
+        $input['original_user_id'] = \Auth::id();
+        $input['target_id'] = $kohdeID;
+
+        $reservation = Reservation::create($input);
+
+         // Success
+        $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! <a>Tarkastele varaustasi tästä.</a>'); 
+        return redirect('member/kohteet/' . $kohdeID . '/varaukset');
+
+    }
+
+    public function deleteReservation(Request $request, $kohdeID, $varausID) {
+        // We want to ensure user owns this reservation
+        $reservation = Reservation::findOrFail($varausID);
+        
+        if ($reservation->user_id != \Auth::id()) {
+            return response('Unauthorized', 401);
+        }
+
+        if ($reservation->target_id != $kohdeID) {
+            $request->session()->flash('operationfail', 'Varausta ei onnistuttu perumaan. Ota yhteys ylläpitäjään jos ongelma toistuu.');
+            return back();
+        }
+
+        $reservation->delete();
+        $request->session()->flash('operationsuccess', 'Varauksesi on peruttu onnistuneesti.');
+        return redirect('member/kohteet/' . $kohdeID . '/varaukset');
+
+
+
+
+    }
+
     /**
      * Display a listing of the resource.
      *
