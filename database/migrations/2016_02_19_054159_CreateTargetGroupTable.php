@@ -14,7 +14,7 @@ class CreateTargetGroupTable extends Migration
     {
         Schema::create('targetgroups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned(); // admin of the group
             $table->string('name', 64);
             $table->string('description', 1024);
             $table->boolean('allowTwoReservationsInsideGroupBySameUser');

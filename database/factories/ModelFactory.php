@@ -19,3 +19,26 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Targetgroup::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => rand(1, 5),
+        'name' => $faker->name,
+        'description' => $faker->sentence,
+        'allowTwoReservationsInsideGroupBySameUser' => 0
+    ];
+});
+
+$factory->define(App\Target::class, function (Faker\Generator $faker) {
+    return [
+        'targetgroup_id' => rand(1, 7),
+        'name' => $faker->name,
+        'description' => $faker->sentence,
+        'maxReservationLength' => rand(1, 10),
+        'minReservationLength' => 1,
+        'emailWhenSomebodyReserves' => 1,
+        'emailWhenSomebodyCancels' => 1,
+        'emailWhenGeneralAnnouncement' => 1,
+        'allowTwoReservationsBySameUser' => 0
+    ];
+});
