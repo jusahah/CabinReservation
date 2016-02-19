@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePendingGroupJoinRequestTable extends Migration
+class CreateTargetGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,18 @@ class CreatePendingGroupJoinRequestTable extends Migration
      */
     public function up()
     {
-        Schema::create('pendinggroupjoinrequests', function (Blueprint $table) {
+        Schema::create('targetgroups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('targetgroup_id')->unsigned();
+            $table->string('name', 64);
+            $table->string('description', 1024);
+            $table->boolean('allowTwoReservationsInsideGroupBySameUser');
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('targetgroup_id')->references('id')->on('targetgroups')->onDelete('cascade');
         });
 
-
+        
 
     }
 
@@ -32,6 +34,6 @@ class CreatePendingGroupJoinRequestTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pendinggroupjoinrequests');
+        Schema::drop('targetgroups');
     }
 }
