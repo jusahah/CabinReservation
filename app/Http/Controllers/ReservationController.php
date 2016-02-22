@@ -100,11 +100,21 @@ class ReservationController extends Controller
 
         $reservation->delete();
         $request->session()->flash('operationsuccess', 'Varauksesi on peruttu onnistuneesti.');
-        return redirect('member/kohteet/' . $kohdeID . '/varaukset');
+        return redirect('member/kohteet/' . $kohdeID);
 
+    }
 
+    public function deleteReservationByAdmin(Request $request, $kohdeID, $varausID) {
+        $reservation = Reservation::findOrFail($varausID);
 
+        if ($reservation->target_id != $kohdeID) {
+            $request->session()->flash('operationfail', 'Varausta ei onnistuttu poistamaan.');
+            return back();
+        }  
 
+        $reservation->delete();
+        $request->session()->flash('operationsuccess', 'Varauksesi on poistettu onnistuneesti.');
+        return redirect('member/kohteet/' . $kohdeID);     
     }
 
     /**

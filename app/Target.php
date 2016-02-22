@@ -26,9 +26,9 @@ class Target extends Model
     	'description' => 'required|min:1|max:512',
     	'maxReservationLength' => 'integer|max:365',
     	'minReservationLength' => 'integer|max:365',
-    	'emailWhenSomebodyReserves' => 'integer|min:0|max:1',
-    	'emailWhenSomebodyCancels' => 'integer|min:0|max:1',
-    	'emailWhenGeneralAnnouncement' => 'integer|min:0|max:1',
+    	'emailWhenSomebodyReserves' => 'integer|min:0|max:2',
+    	'emailWhenSomebodyCancels' => 'integer|min:0|max:2',
+    	'emailWhenGeneralAnnouncement' => 'integer|min:0|max:2',
     	'allowTwoReservationsBySameUser' => 'integer|min:0|max:1',
     );
 

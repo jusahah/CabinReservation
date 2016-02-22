@@ -19,7 +19,7 @@ class IsOwnerOfReservation
         $varausID = $request->route('varausID');
         $varaus = Reservation::findOrFail($varausID);
         if (\Auth::user() != $varaus->user()) {
-            return back()->with('error', 'Et voi käsitellä toisen käyttäjän varausta.');
+            return back()->with('operationfail', 'Et voi käsitellä toisen käyttäjän varausta.');
         }
 
         return $next($request);

@@ -35,7 +35,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('member/home');
+            $ryhmaID = \Auth::user()->targetgroup_id;
+            if ($ryhmaID) return redirect('member/' . $ryhmaID . '/etusivu');
+            else return redirect('member/eiryhmaa');
         }
 
         return $next($request);

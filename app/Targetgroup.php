@@ -19,5 +19,9 @@ class Targetgroup extends Model
     	return $this->hasMany('App\Target');
     }
 
+    public function members() {
+    	return $this->hasMany('App\User');
+    }
+
 
 }

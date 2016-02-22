@@ -17,7 +17,7 @@ class PageController extends Controller
     public function __construct(Request $r) {
         parent::__construct($r);
     }
-    
+
     public function index()
     {
         //
@@ -25,6 +25,10 @@ class PageController extends Controller
 
     public function memberFront(Request $request) {
         return view('member/home');
+    }
+
+    public function showNoGroupFront(Request $request) {
+        return view('member/nogroup');
     }
 
 

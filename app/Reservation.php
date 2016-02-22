@@ -39,4 +39,14 @@ class Reservation extends Model
 		return $this->belongsTo('App\User', 'original_user_id');
 	}
 
+	public function getNotesTrimmed($len) {
+		$notes = $this->notes;
+
+		if (strlen($notes) <= $len-3) {
+			return $notes;
+		}
+
+		return substr($notes, 0, $len-3) . "...";
+	}
+
 }

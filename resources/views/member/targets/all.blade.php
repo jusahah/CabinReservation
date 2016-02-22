@@ -1,11 +1,11 @@
 @extends('member/home')
 
-@section('pagename', 'Kaikki kohteet')
+@section('pagename', 'Varattavissa olevat kohteet')
 
 
 
 @section('content')
-    <p>Varattavien kohteiden lista.</p>
+
 
 
     <div class="col-md-12 col-sm-12 col-sx-12">
@@ -63,10 +63,10 @@
 			                          </button>
 			                          <ul class="dropdown-menu pull-right">
 			                            <li>
-			                              <a href="#" data-original-title="">Avaa Info</a>
+			                               <a href="{{route('kohdeinfo', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Avaa Info</a>
 			                            </li>
 			                            <li>
-			                              <a href="#" data-original-title="">Poista</a>
+			                              <a href="{{route('tuhoakohde', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Poista</a>
 			                            </li>
 			                          </ul>
 			                        </div>

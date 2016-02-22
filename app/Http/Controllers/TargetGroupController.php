@@ -38,8 +38,12 @@ class TargetGroupController extends Controller
 
     }
 
-    public function showMembers(Request $request) {
-        return 'Target group member list';
+    public function showMembers(Request $request, $ryhmaID) {
+
+        // Everytime we get this far we know user has a right to see group-level information
+        $group = Targetgroup::findOrFail($ryhmaID);
+
+        return view('member/groupmembers')->with('members', $group->members()->get());
     }
 
     public function showLog(Request $request) {

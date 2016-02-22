@@ -20,7 +20,7 @@ class TargetController extends Controller
     public function __construct(Request $r) {
         parent::__construct($r);
     }
-        
+
     public function index(Request $request)
     {
         // targetgroup_id was bound inside middleware
@@ -37,11 +37,12 @@ class TargetController extends Controller
 
     public  function showTargetInfo(Request $request, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
-        return view('member/targetinfo')->with('target', $target)->with('me', \Auth::id());
+        $isAdmin = \Auth::id() == $target->targetgroup->user_id;
+        return view('member/targets/info')->with('target', $target)->with('me', \Auth::id())->with('isAdmin', $isAdmin);
     }
 
     // POST route
-    public function createTarget(Request $request) {
+    public function createTarget(Request $request, $ryhmaID) {
         
         $validator = \Validator::make($request->all(), Target::validationRules());
         if ($validator->fails()) {
@@ -53,10 +54,23 @@ class TargetController extends Controller
 
          // Success
         $request->session()->flash('operationsuccess', 'Uusi varauskohde luotu!');   
-        return redirect('member/kohteet');
+        return redirect('member/' . $ryhmaID . '/kohteet');
 
         // Default settings 
 
+    }
+
+    public function askConfirmDeleteTarget(Request $request, $kohdeID) {
+        $target = Target::findOrFail($kohdeID);
+        return view('member/targets/deleteconfirmation')->with('target', $target);
+
+    }
+
+    public function deleteTarget(Request $request, $kohdeID) {
+        $target = Target::findOrFail($kohdeID);
+        $target->delete();
+        $request->session()->flash('operationsuccess', 'Kohde on poistettu.');
+        return redirect('member/kohteet');
     }
 
 

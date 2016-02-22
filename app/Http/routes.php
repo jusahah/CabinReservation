@@ -16,21 +16,25 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
-	Route::get('home', ['as' => 'jasenetusivu', 'uses' => 'PageController@memberFront']);
-
+	
+	Route::get('etusivu', ['as' => 'eiryhmaa', 'uses' => 'PageController@showNoGroupFront']);
+	Route::get('etsiryhma', ['as' => 'etsiryhmaa', 'uses' => 'PageController@searchForGroup']);
 	// These routes require that user is already member of target group
 	Route::group(['middleware' => 'assignedToTargetGroup'], function() {
+		Route::get('{ryhmaID}/etusivu', ['as' => 'jasenetusivu', 'uses' => 'PageController@memberFront']);
 
 		// Forbidden to use TargetController here as we are handling group-level details, not target-level.
-		Route::get('kohteet', ['as' => 'kohteet', 'uses' => 'TargetGroupController@index']);
-		Route::get('kohteet/luo', ['as' => 'luokohdeform', 'uses' => 'TargetGroupController@showTargetCreation']);
-		Route::get('kohteet/jasenet', ['as' => 'kohteenjasenet', 'uses' => 'TargetGroupController@showMembers']);
-		Route::get('kohteet/loki', ['as' => 'kohteenloki', 'uses' => 'TargetGroupController@showLog']);
+		Route::get('{ryhmaID}/kohteet', ['as' => 'kohteet', 'uses' => 'TargetGroupController@index']);
+		Route::get('{ryhmaID}/kohteet/luo', ['as' => 'luokohdeform', 'uses' => 'TargetGroupController@showTargetCreation']);
+		Route::get('{ryhmaID}/jasenet', ['as' => 'ryhmanjasenet', 'uses' => 'TargetGroupController@showMembers']);
+		Route::get('{ryhmaID}/loki', ['as' => 'ryhmanloki', 'uses' => 'TargetGroupController@showLog']);
+
+		Route::get('{ryhmaID}/jasenet', ['as' => 'ryhmanjasenet', 'uses' => 'TargetGroupController@showMembers']);
 
 		// Actions that require target being part of a group
 		Route::group(['middleware' => 'targetPartOfTargetGroup'], function() {
 			// Now we handle target-level details, so we dispatch to TargetController
-			Route::get('kohteet/{kohdeID}', ['as' => 'kohdeinfo', 'uses' => 'TargetController@showTargetInfo']);
+			Route::get('{ryhmaID}/kohteet/{kohdeID}', ['as' => 'kohdeinfo', 'uses' => 'TargetController@showTargetInfo']);
 			Route::get('kohteet/{kohdeID}/varaukset', ['as' => 'kohteenvaraukset', 'uses' => 'ReservationController@targetReservations']);
 			Route::get('kohteet/{kohdeID}/varaukset/luo', ['as' => 'luovarausform', 'uses' => 'ReservationController@showReservationCreation']);
 			Route::post('kohteet/{kohdeID}/varaukset', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
@@ -54,8 +58,13 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 
 		// Stuff only admin can do
 		Route::group(['middleware' => 'isTargetGroupAdmin'], function() {
-			Route::post('kohteet', ['as' => 'luokohde', 'uses' => 'TargetController@createTarget']);
+			Route::post('{ryhmaID}/kohteet', ['as' => 'luokohde', 'uses' => 'TargetController@createTarget']);
 			Route::put('kohteet', ['as' => 'muokkaakohde', 'uses' => 'TargetController@editTarget']);
+			Route::get('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohde', 'uses' => 'TargetController@askConfirmDeleteTarget']);
+			Route::post('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohdevahvistettu', 'uses' => 'TargetController@deleteTarget']);
+			
+			//Varaukset
+			Route::get('kohteet/{kohdeID}/varaukset/{varausID}/poista', ['as' => 'tuhoavaraus', 'uses' => 'ReservationController@deleteReservationByAdmin']);
 		});
 
 

@@ -53,36 +53,12 @@
 			<div id='menu'>
 				<ul>
 					<li class='highlight'>
-						<a href='{{route("kohteet", ["ryhmaID" => $global_ryhmaID])}}'>
+						<a href='/'>
 							<div class="fs1" aria-hidden="true" data-icon="&#xe007;"></div>
-							<span>Kohdeluettelo</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{route('luokohdeform', ['ryhmaID' => $global_ryhmaID])}}">
-							<div class="fs1" aria-hidden="true" data-icon="&#xe0f8;"></div>
-							<span>Luo uusi kohde</span>
+							<span>Hae ryhmän jäsenyyttä</span>
 						</a>
 					</li>
 
-					<li>
-						<a href="{{route('ryhmanloki', ['ryhmaID' => $global_ryhmaID])}}">
-							<div class="fs1" aria-hidden="true" data-icon="&#xe0e6;"></div>
-							<span>Varausloki</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{route('ryhmanjasenet', ['ryhmaID' => $global_ryhmaID])}}">
-							<div class="fs1" aria-hidden="true" data-icon="&#xe0f2;"></div>
-							<span>Jäsenlista</span>
-						</a>
-					</li>
-					<li>
-						<a href="{{route('logout')}}">
-							<div class="fs1" aria-hidden="true" data-icon="&#xe0f2;"></div>
-							<span>Kirjaudu Ulos</span>
-						</a>
-					</li>
 
 				</ul>
 			</div>
@@ -91,12 +67,11 @@
 			<!-- Extras starts -->
 			<div class="extras">
 				<div class="ex-wrapper">
-					<div class="alert alert-info">
-						Varausryhmässäsi on <strong>{{$groupmembercount}}</strong> @if($groupmembercount == 1) jäsen. @else jäsentä. @endif
+					<div class="alert alert-danger">
+						Varausmestarin käyttö vaatii, että olet jäsen varausryhmässä. Aloita
+						etsimällä haluamasi ryhmä ja hae sen jäsenyyttä.
 					</div>
-					<div class="alert alert-info">
-						Varausryhmässäsi on <strong>{{$grouptargetcount}}</strong> @if($grouptargetcount == 1) varattava kohde. @else varattavaa kohdetta. @endif
-					</div>					
+				
 				</div>
 			</div>
 			<!-- Extras ends -->
@@ -283,11 +258,7 @@
 						@endif
 
 						@if (Session::has('operationfail'))
-						    <div class="alert alert-danger">
-						    <div class="alert-body">
-						    {{Session::get('operationfail')}}
-						    </div>
-						    </div>
+						    <p>{{Session::get('operationfail')}}</p>
 						@endif
 						@if (Session::has('operationsuccess'))
 						    <p>{{Session::get('operationsuccess')}}</p>
