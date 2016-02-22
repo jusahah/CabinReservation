@@ -46,8 +46,22 @@ class TargetGroupController extends Controller
         return view('member/groupmembers')->with('members', $group->members()->get());
     }
 
-    public function showLog(Request $request) {
-        return 'Target group log';
+    public function showLog(Request $request, $ryhmaID) {
+
+        $group = Targetgroup::findOrFail($ryhmaID);
+        $targets = $group->targets()->with('reservations')->with('reservations.user')->get();
+
+        $reservations = [];
+
+        foreach ($targets as $key => $target) {
+            $reservations = array_merge($reservations, $target->reservations->all());
+
+        }
+
+        $reservations = collect($reservations);
+
+
+        return view('member/reservationlog')->with('reservations', $reservations);
     }
 
 

@@ -31,7 +31,7 @@ class ReservationController extends Controller
         return true;
     }
 
-    public function showReservation(Request $request, $kohdeID, $varausID) {
+    public function showReservation(Request $request, $ryhmaID, $kohdeID, $varausID) {
         $reservation = Reservation::findOrFail($varausID);
         if ($reservation->target_id != $kohdeID) {
             return back()->with('operationfail', 'Varausta ei löytynyt kohteen ' . $kohdeID . ' alta.');

@@ -22,6 +22,8 @@ class TargetPartOfTargetGroup
         $target = Target::findOrFail($request->kohdeID);
 
         if ($target->targetgroup_id != $tgid) {
+            \Session::flash('operationfail', 'Pääsy estetty. Kohde ei kuulu varausryhmääsi. [Virhekoodi: 551]');
+            return back();
             return response('Unauthorized.', 401);
         }
         return $next($request);

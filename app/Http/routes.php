@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			Route::get('kohteet/{kohdeID}/varaukset', ['as' => 'kohteenvaraukset', 'uses' => 'ReservationController@targetReservations']);
 			Route::get('kohteet/{kohdeID}/varaukset/luo', ['as' => 'luovarausform', 'uses' => 'ReservationController@showReservationCreation']);
 			Route::post('kohteet/{kohdeID}/varaukset', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
-			Route::get('kohteet/{kohdeID}/varaukset/{varausID}', ['as' => 'varausinfo', 'uses' => 'ReservationController@showReservation']);
+			Route::get('{ryhmaID}/kohteet/{kohdeID}/varaukset/{varausID}', ['as' => 'varausinfo', 'uses' => 'ReservationController@showReservation']);
 			
 			// These are routes that only owner of reservation can hit
 			Route::group(['middleware' => 'isOwnerOfReservation'], function() {

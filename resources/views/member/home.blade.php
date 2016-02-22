@@ -118,11 +118,15 @@
 					<li>
 						<div class="custom-search hidden-sm hidden-xs pull-left">
 							
-							<h3>{{$targetgroupname}}</h3>
+							
 						</div>
 					</li>
 				</ul>
 				<div class="pull-right">
+				
+				<h4 style="margin-top: 18px;"><span class="label label-info">Varausryhmä: {{$targetgroupname}}</span></h4>
+
+	<!--
 					<ul id="mini-nav" class="clearfix">
 						<li class="list-box hidden-xs">
 							<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
@@ -237,6 +241,7 @@
 							</a>
 						</li>
 					</ul>
+					-->
 				</div>
 			</header>
 			<!-- Header ends -->
@@ -311,7 +316,7 @@
 
 			<!-- Footer Start -->
 			<footer>
-				Copyright Cloud Admin <span>2015</span>. All Rights Reserved.
+				Copyright <a href="http://www.nollaversio.fi">Nollaversio IT</a> 2016. Kaikki oikeudet pidätetty.
 			</footer>
 			<!-- Footer end -->
 			
