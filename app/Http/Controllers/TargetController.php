@@ -17,6 +17,10 @@ class TargetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(Request $r) {
+        parent::__construct($r);
+    }
+        
     public function index(Request $request)
     {
         // targetgroup_id was bound inside middleware
@@ -34,12 +38,6 @@ class TargetController extends Controller
     public  function showTargetInfo(Request $request, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
         return view('member/targetinfo')->with('target', $target)->with('me', \Auth::id());
-    }
-    // GET route
-    public function showTargetCreation() {
-
-        return view('member/createtarget');
-
     }
 
     // POST route

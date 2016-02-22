@@ -32,5 +32,6 @@ class Kernel extends HttpKernel
         'assignedToTargetGroup' => \App\Http\Middleware\EnsureUserHasTargetGroup::class,
         'isTargetGroupAdmin' => \App\Http\Middleware\IsTargetGroupAdmin::class,
         'targetPartOfTargetGroup' => \App\Http\Middleware\TargetPartOfTargetGroup::class,
+        'isOwnerOfReservation' => \App\Http\Middleware\IsOwnerOfReservation::class,
     ];
 }

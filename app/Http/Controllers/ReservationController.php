@@ -12,6 +12,9 @@ use App\Reservation;
 
 class ReservationController extends Controller
 {
+    public function __construct(Request $r) {
+        parent::__construct($r);
+    }
     protected function checkReservationOverlap($kohdeID, $startDate, $endDate) {
 
         $reservations = Reservation::where('target_id', $kohdeID)->where('enddate', '>=', $startDate)->get();
@@ -26,9 +29,19 @@ class ReservationController extends Controller
         }
 
         return true;
+    }
 
+    public function showReservation(Request $request, $kohdeID, $varausID) {
+        $reservation = Reservation::findOrFail($varausID);
+        if ($reservation->target_id != $kohdeID) {
+            return back()->with('operationfail', 'Varausta ei löytynyt kohteen ' . $kohdeID . ' alta.');
+        }
+        return view('member/reservation/single')->with('reservation', $reservation);
+        return "Show reservation for: " . $kohdeID . " and " . $varausID;
 
     }
+
+
 
     public function targetReservations(Request $request, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
