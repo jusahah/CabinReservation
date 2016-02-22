@@ -51,15 +51,16 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			Route::get('kohteet/{kohdeID}/ilmoitukset', ['as' => 'kohteenilmoitukset', 'uses' => 'AnnouncementController@targetAnnouncements']);
 			Route::post('kohteet/{kohdeID}/ilmoitukset', ['as' => 'luoilmoitus', 'uses' => 'AnnouncementController@createAnnouncement']);
 
-
-
 		});
 
 
 		// Stuff only admin can do
 		Route::group(['middleware' => 'isTargetGroupAdmin'], function() {
 			Route::post('{ryhmaID}/kohteet', ['as' => 'luokohde', 'uses' => 'TargetController@createTarget']);
-			Route::put('kohteet', ['as' => 'muokkaakohde', 'uses' => 'TargetController@editTarget']);
+			// Edit target settings
+			Route::get('{ryhmaID}/kohteet/{kohdeID}/muokkaa', ['as' => 'muokkaakohdetta', 'uses' => 'TargetController@showEditTarget']);
+			// Do the actual editing with PUT req
+			Route::put('{ryhmaID}/kohteet/{kohdeID}', ['as' => 'vahvistakohteenmuokkaus', 'uses' => 'TargetController@editTarget']);
 			Route::get('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohde', 'uses' => 'TargetController@askConfirmDeleteTarget']);
 			Route::post('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohdevahvistettu', 'uses' => 'TargetController@deleteTarget']);
 			

@@ -22,7 +22,7 @@ class Target extends Model
     ];
 
     public static $rules = array(
-    	'name' => 'required|alphanum|min:1|max:64',
+    	'name' => 'required|string|min:1|max:64',
     	'description' => 'required|min:1|max:512',
     	'maxReservationLength' => 'integer|max:365',
     	'minReservationLength' => 'integer|max:365',

@@ -49,4 +49,13 @@ class Reservation extends Model
 		return substr($notes, 0, $len-3) . "...";
 	}
 
+	public function getDurationInDays() {
+		$date1 = new \DateTime($this->startdate);
+		$date2 = new \DateTime($this->enddate);
+
+		$diff = $date2->diff($date1)->format("%a");
+
+		return $diff;
+	}
+
 }

@@ -95,8 +95,13 @@
 			                </a>
 
 			              </div>			            	
-
+			            <hr>
+			            	<a href="{{route('muokkaakohdetta', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" class="btn btn-primary">Muuta asetuksia</a>
+			            
+			            
+	
 			            </div>
+
 			            </div>
 			            </div>				            		            
 </div>

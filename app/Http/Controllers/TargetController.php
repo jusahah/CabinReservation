@@ -35,7 +35,7 @@ class TargetController extends Controller
 
     }
 
-    public  function showTargetInfo(Request $request, $kohdeID) {
+    public  function showTargetInfo(Request $request, $ryhmaID, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
         $isAdmin = \Auth::id() == $target->targetgroup->user_id;
         return view('member/targets/info')->with('target', $target)->with('me', \Auth::id())->with('isAdmin', $isAdmin);
@@ -71,6 +71,27 @@ class TargetController extends Controller
         $target->delete();
         $request->session()->flash('operationsuccess', 'Kohde on poistettu.');
         return redirect('member/kohteet');
+    }
+
+    public function showEditTarget(Request $request, $ryhmaID, $kohdeID) {
+        // Neat idea -> handle ALL ModenNotfoundExceptions in one place (app exception handler somewhere way above!)
+        $target = Target::findOrFail($kohdeID);
+        return view('member/targets/edit')->with('target', $target);
+    }
+
+    public function editTarget(Request $request, $ryhmaID, $kohdeID) {
+
+        $validator = \Validator::make($request->all(), Target::validationRules());
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();            
+        }
+        $input = $request->all();
+        $target = Target::findOrFail($kohdeID);
+        $target->fill($input); // Mass assigment guard takes care of any alien extra params if present
+        $target->save();
+        \Session::flash('operationsuccess', 'Asetukset muutettu!');
+        return back();
+
     }
 
 

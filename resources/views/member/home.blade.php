@@ -295,7 +295,11 @@
 						    </div>
 						@endif
 						@if (Session::has('operationsuccess'))
+							<div class="alert alert-success">
+						    <div class="alert-body">
 						    <p>{{Session::get('operationsuccess')}}</p>
+						    </div>
+						    </div>
 						@endif						
 						<!-- Row Starts -->
 						@yield('content')
