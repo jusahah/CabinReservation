@@ -79,7 +79,7 @@
 		if (!loppuun || loppuun.trim() === '') return;
 
 		if (loppuun < alkuun) {
-			alert("Alkaa-päivämäärä ei voi Loppuu-päivämäärän jälkeen!");
+			alert("Alkaa-päivämäärä ei voi tulla Loppuu-päivämäärän jälkeen!");
 			emptyBoth();
 		}
 	}

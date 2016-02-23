@@ -125,8 +125,8 @@
 		if (!loppuun || loppuun.trim() === '') return;
 
 		if (loppuun < alkuun) {
-			alert("Alkaa-päivämäärä ei voi Loppuu-päivämäärän jälkeen!");
-			emptyBoth();
+		$('#alkuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');		
+		$('#loppuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');			
 		}
 	}
 

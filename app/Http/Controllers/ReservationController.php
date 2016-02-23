@@ -54,9 +54,21 @@ class ReservationController extends Controller
         return view('member/createreservation')->with('target', $target);
     }
 
+    protected function checkMinMaxReservationLength($startdate, $enddate, $target) {
+        $date1 = new \DateTime($startdate);
+        $date2 = new \DateTime($enddate);
+        $diff = $date2->diff($date1)->format("%a") + 1;
+
+        if ($diff > $target->maxReservationLength) return 1;
+        if ($diff < $target->minReservationLength) return -1;
+        return 0;
+
+    }
+
     // POST route
     public function createReservation(Request $request, $ryhmaID, $kohdeID) {
 
+        $target = Target::findOrFail($kohdeID);
 
         $validator = \Validator::make($request->all(), Reservation::suomiValidationRules());
         if ($validator->fails()) {
@@ -65,29 +77,78 @@ class ReservationController extends Controller
         // First checkpoint of validations passed
         // We still have to check that reservation does not overlap with other reservations
         // And check that user has no other reservations active if allowTwoReservationsBySameUser is set false
+
         $input = $request->all();
-
-
         $input['startdate'] = date('Y-m-d', strtotime($input['startdate']));
         $input['enddate']   = date('Y-m-d', strtotime($input['enddate']));
 
-
-
-        if (!$this->checkReservationOverlap($kohdeID, $input['startdate'], $input['enddate'])) {
-            $request->session()->flash('operationfail', 'Varausta epäonnistui. Tarkista päivämäärät. Et voi varata päivälle, jolle on jo varaus olemassa.');
-            return back()->withInput();
-
+        // Next lets check startdate is same or before enddate
+        if ($input['startdate'] > $input['enddate']) {
+            $request->session()->flash('operationfail', 'Varaus epäonnistui. Tarkista päivämäärät ja niiden järjestys.');
+            return back()->withInput();            
         }
+
+        // Lets check it is not 'historical' (startdate has at least today as its value)
+        if ($input['startdate'] < date('Y-m-d')) {
+             $request->session()->flash('operationfail', 'Varaus epäonnistui. Et voi tehdä varausta menneisyyteen.');
+            return back()->withInput();                 
+        }
+
+        // Then lets check target allows this long/short reservation
+        // Returns zero is all is fine
+        $res = $this->checkMinMaxReservationLength($input['startdate'], $input['enddate'], $target);
+        if ($res == 1) {
+            $request->session()->flash('operationfail', 'Varaus epäonnistui - liian pitkä varaus. Maksimikesto on ' . $target->maxReservationLength . ' päivää.');
+            return back()->withInput(); 
+        } else if ($res == -1) {
+            $request->session()->flash('operationfail', 'Varaus epäonnistui - liian lyhyt varaus. Minimikesto on ' . $target->minReservationLength .  ' päivää.');
+            return back()->withInput(); 
+        }
+
 
         $input['user_id'] = \Auth::id();
         $input['original_user_id'] = \Auth::id();
         $input['target_id'] = $kohdeID;
 
-        $reservation = Reservation::create($input);
+        // We need to start transaction here
 
-         // Success
-        $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! <a>Tarkastele varaustasi tästä.</a>'); 
-        return redirect()->route('jasenetusivu', ['ryhmaID' => $ryhmaID]);
+        $failed = false;
+        $varausID = 0;
+        // Works!
+        try {
+            \DB::transaction(function () use ($kohdeID, $input, $request, &$failed, &$varausID) {
+                // Check that there are no overlapping
+                $found = Reservation::where('target_id', $kohdeID)->where('enddate', '>=', $input['startdate'])->where('startDate', '<=', $input['enddate'])->first();
+
+                if ($found) {
+                    throw new \Exception();
+                }
+                /*
+                if (!$this->checkReservationOverlap($kohdeID, $input['startdate'], $input['enddate'])) {
+                    $request->session()->flash('operationfail', 'Varausta epäonnistui. Tarkista päivämäärät. Et voi varata päivälle, jolle on jo varaus olemassa.');
+                    return back()->withInput();
+
+                }
+                */
+                $reservation = Reservation::create($input);
+                $varausID    = $reservation->id;
+            });
+        } catch (\Exception $e) {
+            $failed = true;
+        }
+
+        // Yes, this is very hacky.
+        if (!$failed) {
+            // Success
+            $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! Varauksen tiedot alla.'); 
+            return redirect()->route('varausinfo', ['ryhmaID' => $ryhmaID, 'kohdeID' => $kohdeID, 'varausID' => $varausID]);
+
+        } else {
+            $request->session()->flash('operationfail', 'Varaus epäonnistui. Tarkista päivämäärät etteivät ne mene päällekkäin jo varattujen kanssa.');
+            return back()->withInput();
+        }
+
+
 
     }
 
