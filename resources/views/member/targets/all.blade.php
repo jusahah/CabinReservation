@@ -17,10 +17,10 @@
 			                  <thead>
 			                    <tr>
 			                      <th style="width:30%">Kohteen nimi</th>
-			                      <th style="width:10%" class="hidden-phone">Vapaana</th>
+			                      <th style="width:8%" class="hidden-phone">Vapaana</th>
 			                      <th style="width:30%" class="hidden-phone">Seuraava varaus</th>
 			                      <th style="width:20%" class="hidden-phone">Varaaja</th>
-			                      <th style="width:10%" class="hidden-phone">Toimenpiteet</th>
+			                      <th style="width:12%" class="hidden-phone">Toiminnot</th>
 			                    </tr>
 			                  </thead>
 			                  <tbody>
@@ -58,6 +58,7 @@
 			                        @endif			                      	
 
 			                      </td>
+
 			                      <td class="hidden-phone">
 			                        <div class="btn-group">
 			                          <button data-toggle="dropdown" class="btn btn-xs dropdown-toggle" style="padding: 3px;">
@@ -67,10 +68,10 @@
 			                          </button>
 			                          <ul class="dropdown-menu pull-right">
 			                            <li>
-			                               <a href="{{route('kohdeinfo', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Avaa Info</a>
+			                               <a href="{{route('kohdeinfo', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Avaa info</a>
 			                            </li>
 			                            <li>
-			                              <a href="{{route('kohdekalenteri', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Kalenteri</a>
+			                              <a href="{{route('varausvaihe2', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Varauskalenteri</a>
 			                            </li>			                            
 			                            <li>
 			                              <a href="{{route('tuhoakohde', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Poista</a>

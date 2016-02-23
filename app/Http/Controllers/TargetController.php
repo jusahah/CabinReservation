@@ -66,17 +66,17 @@ class TargetController extends Controller
 
     }
 
-    public function askConfirmDeleteTarget(Request $request, $kohdeID) {
+    public function askConfirmDeleteTarget(Request $request, $ryhmaID, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
         return view('member/targets/deleteconfirmation')->with('target', $target);
 
     }
 
-    public function deleteTarget(Request $request, $kohdeID) {
+    public function deleteTarget(Request $request, $ryhmaID, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
         $target->delete();
         $request->session()->flash('operationsuccess', 'Kohde on poistettu.');
-        return redirect('member/kohteet');
+        return redirect()->route('jasenetusivu', ['ryhmaID' => $ryhmaID]);
     }
 
     public function showEditTarget(Request $request, $ryhmaID, $kohdeID) {

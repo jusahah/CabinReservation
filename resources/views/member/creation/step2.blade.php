@@ -1,6 +1,6 @@
 @extends('member/home')
 
-@section('pagename', 'Varaus 2/2 - Valitse päivämäärät')
+@section('pagename', 'Varauskalenteri | ' . $target->name)
 
 
 
@@ -9,20 +9,7 @@
 
 
     <div class="col-md-12 col-sm-12 col-sx-12">
-			          <div class="panel panel-default">
 
-			            <div class="panel-body">
-			            				              <div class="list-group no-margin">
-
-				 
-				                  <h4 class="list-group-item-heading">Valittu kohde: {{$target->name}}</h4>
-				                  
-				             
-
-				              </div>	
-			             
-			            </div>
-			          </div>
 			        <div class="row no-gutter">
 			          <div class="col-md-7 col-sm-7 col-sx-12">
 			          <div class="panel">

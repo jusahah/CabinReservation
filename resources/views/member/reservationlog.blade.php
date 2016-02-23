@@ -17,8 +17,8 @@
 			                  <thead>
 			                    <tr>
 			                      <th style="width:30%">Kohde</th>
-			                      <th style="width:30%" class="hidden-phone">Varaaja</th>
-			                      <th style="width:25%" class="hidden-phone">Ajankohta</th>
+			                      <th style="width:25%" class="hidden-phone">Varaaja</th>
+			                      <th style="width:30%" class="hidden-phone">Ajankohta</th>
 			                      <th style="width:15%" class="hidden-phone">Avaa info</th>
 			                    </tr>
 			                  </thead>
@@ -32,7 +32,11 @@
 			                     	{{$reservation->user->name}}
 			                      </td>
 			                      <td class="hidden-phone">
-			                       {{date("d.m", strtotime($reservation->startdate)) . " - " . date("d.m", strtotime($reservation->enddate))}}
+			                      @if($reservation->startdate == $reservation->enddate)
+			                      {{date("d.m.y", strtotime($reservation->startdate))}}
+			                      @else
+			                       {{date("d.m.y", strtotime($reservation->startdate)) . " - " . date("d.m.y", strtotime($reservation->enddate))}}
+			                      @endif
 			                      </td>
 			                      <td class="hidden-phone">
 			                        <a class="btn btn-primary" href="{{route('varausinfo', [

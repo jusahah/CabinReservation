@@ -7,15 +7,21 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\User;
 use App\Target;
 use App\Targetgroup;
 use App\Reservation;
 
 class ReservationController extends Controller
 {
+    protected $today;
+
     public function __construct(Request $r) {
+
+        $this->today = date('Y-m-d');
         parent::__construct($r);
     }
+
     protected function checkReservationOverlap($kohdeID, $startDate, $endDate) {
 
         $reservations = Reservation::where('target_id', $kohdeID)->where('enddate', '>=', $startDate)->get();
@@ -54,7 +60,7 @@ class ReservationController extends Controller
         return view('member/createreservation')->with('target', $target);
     }
 
-    protected function checkMinMaxReservationLength($startdate, $enddate, $target) {
+    protected function checkMinMaxReservationLength($startdate, $enddate, Target $target) {
         $date1 = new \DateTime($startdate);
         $date2 = new \DateTime($enddate);
         $diff = $date2->diff($date1)->format("%a") + 1;
@@ -62,6 +68,19 @@ class ReservationController extends Controller
         if ($diff > $target->maxReservationLength) return 1;
         if ($diff < $target->minReservationLength) return -1;
         return 0;
+
+    }
+
+    protected function checkTwoPendingReservationsBan(Target $target, User $user) {
+
+        if ($target->allowTwoReservationsBySameUser == 0) {
+            // Lets search for reservations
+            $found = $target->reservations()->where('user_id', $user->id)->where('enddate', '>', $this->today)->first();
+
+            if ($found) return true;
+        }
+
+        return false;
 
     }
 
@@ -74,6 +93,10 @@ class ReservationController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();            
         }
+
+        // Most of this validation code should probably live in a service class or somewhere
+        // But lets keep it here because we are not planning to support multiple types of UIs or anything
+
         // First checkpoint of validations passed
         // We still have to check that reservation does not overlap with other reservations
         // And check that user has no other reservations active if allowTwoReservationsBySameUser is set false
@@ -81,6 +104,15 @@ class ReservationController extends Controller
         $input = $request->all();
         $input['startdate'] = date('Y-m-d', strtotime($input['startdate']));
         $input['enddate']   = date('Y-m-d', strtotime($input['enddate']));
+
+        // Check that if allowTwoReservationsBySameUser is false then user does not have pending reservations
+        if ($this->checkTwoPendingReservationsBan($target, \Auth::user())) {
+            // Fails -> user can not add new reservation
+            $request->session()->flash('operationfail', 'Varaus epäonnistui. Kohde ei salli samalla käyttäjällä olevan kahta varausta, jotka eivät ole päättyneet.');
+            return back()->withInput();           
+        }
+
+        
 
         // Next lets check startdate is same or before enddate
         if ($input['startdate'] > $input['enddate']) {
@@ -131,13 +163,13 @@ class ReservationController extends Controller
                 }
                 */
                 $reservation = Reservation::create($input);
-                $varausID    = $reservation->id;
+                $varausID    = $reservation->id; // Hack my life. We inject freshly-created reservation's id to outer call frame.
             });
         } catch (\Exception $e) {
             $failed = true;
         }
 
-        // Yes, this is very hacky.
+        // Very hacky.
         if (!$failed) {
             // Success
             $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! Varauksen tiedot alla.'); 

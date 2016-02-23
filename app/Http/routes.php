@@ -69,8 +69,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			Route::get('{ryhmaID}/kohteet/{kohdeID}/muokkaa', ['as' => 'muokkaakohdetta', 'uses' => 'TargetController@showEditTarget']);
 			// Do the actual editing with PUT req
 			Route::put('{ryhmaID}/kohteet/{kohdeID}', ['as' => 'vahvistakohteenmuokkaus', 'uses' => 'TargetController@editTarget']);
-			Route::get('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohde', 'uses' => 'TargetController@askConfirmDeleteTarget']);
-			Route::post('kohteet/{kohdeID}/poista', ['as' => 'tuhoakohdevahvistettu', 'uses' => 'TargetController@deleteTarget']);
+			Route::get('{ryhmaID}/kohteet/{kohdeID}/poista', ['as' => 'tuhoakohde', 'uses' => 'TargetController@askConfirmDeleteTarget']);
+			Route::post('{ryhmaID}/kohteet/{kohdeID}/poista', ['as' => 'tuhoakohdevahvistettu', 'uses' => 'TargetController@deleteTarget']);
 			
 			//Varaukset
 			Route::get('kohteet/{kohdeID}/varaukset/{varausID}/poista', ['as' => 'tuhoavaraus', 'uses' => 'ReservationController@deleteReservationByAdmin']);
