@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			
 			// These are routes that only owner of reservation can hit
 			Route::group(['middleware' => 'isOwnerOfReservation'], function() {
-				Route::get('kohteet/{kohdeID}/varaukset/{varausID}/peru', ['as' => 'peruvaraus', 'uses' => 'ReservationController@deleteReservation']);
+				Route::get('{ryhmaID}/kohteet/{kohdeID}/varaukset/{varausID}/peru', ['as' => 'peruvaraus', 'uses' => 'ReservationController@deleteReservation']);
 				Route::get('kohteet/{kohdeID}/varaukset/{varausID}/muokkaa', ['as' => 'muokkaavaraustaform', 'uses' => 'ReservationController@showEditReservation']);
 				Route::post('kohteet/{kohdeID}/varaukset/{varausID}/muokkaa', ['as' => 'muokkaavarausta', 'uses' => 'ReservationController@editReservation']);
 
@@ -73,7 +73,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 			Route::post('{ryhmaID}/kohteet/{kohdeID}/poista', ['as' => 'tuhoakohdevahvistettu', 'uses' => 'TargetController@deleteTarget']);
 			
 			//Varaukset
-			Route::get('kohteet/{kohdeID}/varaukset/{varausID}/poista', ['as' => 'tuhoavaraus', 'uses' => 'ReservationController@deleteReservationByAdmin']);
+			Route::get('{ryhmaID}/kohteet/{kohdeID}/varaukset/{varausID}/poista', ['as' => 'tuhoavaraus', 'uses' => 'ReservationController@deleteReservationByAdmin']);
 		});
 
 

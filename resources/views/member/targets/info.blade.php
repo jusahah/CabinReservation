@@ -214,9 +214,9 @@
 			                      <td class="hidden-phone">{{$reservation->getNotesTrimmed(36)}}</td>
 			                      <td class="hidden-phone">
 			                      	@if($isAdmin)
-			                        <a href="{{route('tuhoavaraus', ['kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Poista</a>
+			                        <a href="{{route('tuhoavaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Poista</a>
 			                      	@elseif($me == $reservation->user->id)
-			                      	<a href="{{route('peruvaraus', ['kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Peru</a>
+			                      	<a href="{{route('peruvaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Peru</a>
 			                      	@endif
 
 			                      </td>

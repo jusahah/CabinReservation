@@ -184,7 +184,7 @@ class ReservationController extends Controller
 
     }
 
-    public function deleteReservation(Request $request, $kohdeID, $varausID) {
+    public function deleteReservation(Request $request, $ryhmaID, $kohdeID, $varausID) {
         // We want to ensure user owns this reservation
         $reservation = Reservation::findOrFail($varausID);
         
@@ -199,11 +199,11 @@ class ReservationController extends Controller
 
         $reservation->delete();
         $request->session()->flash('operationsuccess', 'Varauksesi on peruttu onnistuneesti.');
-        return redirect('member/kohteet/' . $kohdeID);
+        return redirect()->route('ryhmanloki', ['ryhmaID' => $ryhmaID]);
 
     }
 
-    public function deleteReservationByAdmin(Request $request, $kohdeID, $varausID) {
+    public function deleteReservationByAdmin(Request $request, $ryhmaID, $kohdeID, $varausID) {
         $reservation = Reservation::findOrFail($varausID);
 
         if ($reservation->target_id != $kohdeID) {
@@ -212,8 +212,8 @@ class ReservationController extends Controller
         }  
 
         $reservation->delete();
-        $request->session()->flash('operationsuccess', 'Varauksesi on poistettu onnistuneesti.');
-        return redirect('member/kohteet/' . $kohdeID);     
+        $request->session()->flash('operationsuccess', 'Varaus on poistettu onnistuneesti.');
+        return redirect()->route('ryhmanloki', ['ryhmaID' => $ryhmaID]);   
     }
 
 
