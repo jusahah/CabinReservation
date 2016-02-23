@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Network Helper Dashboard</title>
-        
+        <title>Varausmestari - kirjaudu sisään</title>
+  
         <!-- Error CSS -->
         <link href="{{asset('css/login.css')}}" rel="stylesheet" media="screen">
 
@@ -16,9 +16,20 @@
     </head>
     <body>
 
+
         <form id="wrapper" method="POST" action="{{route('login')}}">
             {!! csrf_field() !!}
+
             <div id="box" class="animated bounceIn">
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger" style="background-color: #F56B6B; width: 320px; margin: auto;">
+                        <ul style="list-style: none;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div id="top_header">
 
                     <h5>

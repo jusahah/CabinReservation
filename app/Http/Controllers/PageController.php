@@ -42,6 +42,9 @@ class PageController extends Controller
     }
 
     public function showNoGroupFront(Request $request) {
+        // Check to make sure he has no group
+        $tgid = Auth::user()->targetgroup_id;
+        if ($tgid) return redirect()->route('jasenetusivu', ['ryhmaID' => $tgid]);
         return view('member/nogroup');
     }
 
