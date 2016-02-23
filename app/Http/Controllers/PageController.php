@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Targetgroup;
+
 class PageController extends Controller
 {
     /**
@@ -23,8 +25,20 @@ class PageController extends Controller
         //
     }
 
-    public function memberFront(Request $request) {
-        return view('member/home');
+    public function memberFront(Request $request, $ryhmaID) {
+
+        $group = Targetgroup::with('targets')->with('targets.reservations')->findOrFail($ryhmaID);
+        $targets = $group->targets;
+
+        $reservations = [];
+
+        foreach ($targets as $key => $target) {
+            $reservations = array_merge($reservations, $target->reservations->all());
+        }
+
+        $reservations = collect($reservations);
+
+        return view('member/ryhmaetusivu')->with('group', $group)->with('reservations', $reservations);
     }
 
     public function showNoGroupFront(Request $request) {

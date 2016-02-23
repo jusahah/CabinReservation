@@ -60,12 +60,14 @@
 							<span>Kohdeluettelo</span>
 						</a>
 					</li>
+					@if($isAdmin)
 					<li>
 						<a href="{{route('luokohdeform', ['ryhmaID' => $global_ryhmaID])}}">
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0f8;"></div>
 							<span>Luo uusi kohde</span>
 						</a>
 					</li>
+					@endif
 
 					<li>
 						<a href="{{route('ryhmanloki', ['ryhmaID' => $global_ryhmaID])}}">
@@ -93,17 +95,24 @@
 			<!-- Extras starts -->
 			<div class="extras">
 				<div class="ex-wrapper">
+					@if($isAdmin)
+					<div class="alert alert-warning" style="width: 100%; padding: 0px;">
+						<p style="color: white; padding: 12px;"><strong>Olet ryhmän admin!</strong></p>
+					</div>	
+					@endif	
 					<div class="alert alert-info">
-						Varausryhmässäsi on <strong>{{$groupmembercount}}</strong> @if($groupmembercount == 1) jäsen. @else jäsentä. @endif
+						Ryhmässä on <strong>{{$groupmembercount}}</strong> @if($groupmembercount == 1) jäsen. @else jäsentä. @endif
 					</div>
 					<div class="alert alert-info">
-						Varausryhmässäsi on <strong>{{$grouptargetcount}}</strong> @if($grouptargetcount == 1) varattava kohde. @else varattavaa kohdetta. @endif
+						Ryhmässä on <strong>{{$grouptargetcount}}</strong> @if($grouptargetcount == 1) varattava kohde. @else varattavaa kohdetta. @endif
 					</div>	
+
 					<div class="alert alert-success" style="width: 100%; padding: 0px;">
 					<a href="{{route('varausvaihe1', ['ryhmaID' => $global_ryhmaID])}}" style="color: white; width: 100%; height: 42px; display: block; padding: 12px; " >
 						<strong>Tee varaus</strong><i class="fa fa-calendar" style="font-size: 18px; float:right;"></i> 
 						</a>
-					</div>										
+					</div>	
+													
 				</div>
 			</div>
 			<!-- Extras ends -->
@@ -131,7 +140,7 @@
 				</ul>
 				<div class="pull-right">
 				
-				<h4 class="hidden-sm hidden-xs" style="margin-top: 18px;"><span class="label label-info">Varausryhmä: {{$targetgroupname}}</span></h4>
+				<h4 class="hidden-sm hidden-xs" style="margin-top: 18px;"><span class="label label-info">Ryhmä: {{$targetgroupname}}</span></h4>
 
 
 					<ul id="mini-nav" class="clearfix">
@@ -274,15 +283,9 @@
 						<h4><div class="fs1" aria-hidden="true" data-icon="&#xe007;"></div>@yield('pagename')</h4>
 					</div>
 					<ul class="right-stats hidden-xs" id="mini-nav-right">
-						<li class="reportrange btn btn-success">
-							<i class="fa fa-calendar"></i>
-							<span></span> <b class="caret"></b>
-						</li>
-						<li>
-							<a href="#" class="btn btn-info sb-open-right  sb-close">
-								<div class="fs1" aria-hidden="true" data-icon="&#xe06a;"></div>
-							</a>
-						</li>
+
+							<p style="font-size: 14px;">Kirjautuneena: <strong>{{$global_username}}</strong></p>
+
 					</ul>
 				</div>
 				<!-- Top Bar Ends -->
