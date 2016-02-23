@@ -15,6 +15,11 @@
         <link href="{{asset('fonts/font-awesome.min.css')}}" rel="stylesheet">
     </head>
     <body>
+   
+
+
+    <h1 class="animated flipInX" style="text-align: center; font-size: 54px; margin-bottom: 0px;">Mökkivaraus.fi</h1>
+    <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px;"></h3>
 
 
         <form id="wrapper" method="POST" action="{{route('login')}}">
@@ -53,11 +58,23 @@
                         <label for="remember"></label>
                         <div class="cb-label">Muista minut</div>
                     </div>
-                    <a class="right_a" href="#">Unohtuiko salasana?</a>
+                   <!-- <a class="right_a" href="#">Unohtuiko salasana?</a> -->
                 </div>
+                <p style="color: #F56B6B; margin: 8px; font-size: 10px; bottom: 8px; left: 10px; position: absolute;"></i>Copyright Nollaversio IT | 2016 | Proudly using Laravel 5.1.0</i></p>
             </div>
         </form>
 
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                var siella = document.getElementById('siellaneon');
+                siella.innerHTML = 'Siellä ne mökit on.';
+                siella.className = 'animated flipInX';
+            }, 1500);
+
+        });
+
+        </script>
     </body>
 </html>
 

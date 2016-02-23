@@ -63,19 +63,7 @@
 
 
         </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Sähköposti-ilmoitus info-viestistä?</label>
-            <p>Jos valitset vaihdoehdon "Kaikille jäsenille", sähköposti-ilmoitus lähetetään kaikille ryhmän jäsenille, jotka
-            ovat sallineet sähköposti-ilmoitusten vastaanoton.</p>
 
-            <select class="form-control input-lg" name="emailWhenGeneralAnnouncement">
-                <option value="2" @if($target->emailWhenGeneralAnnouncement == 2) selected="selected" @endif>Kaikille jäsenille</option>
-                <option value="1" @if($target->emailWhenGeneralAnnouncement == 1) selected="selected" @endif>Vain Adminille</option>
-                <option value="0" @if($target->emailWhenGeneralAnnouncement == 0) selected="selected" @endif>Ei kellekään</option>
-            </select>
-
-
-        </div>
         <hr>
         <div class="form-group">
             <label for="exampleInputEmail1">Varauksen minimikesto (päivissä)?</label>

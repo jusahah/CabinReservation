@@ -72,6 +72,9 @@
 	var alkuunDate;
 	var loppuunDate;
 
+	var alkuunCell;
+	var loppuunCell;
+
 	function validateTextarea() {
 		console.log("VALIDATING NOTES INPUT");
 		var text = $('#notesArea').val();
@@ -83,15 +86,19 @@
 		}
 	}
 
-	function setAlkuun(date) {
+	function setAlkuun(date, cell) {
 		alkuunDate = date;
+		alkuunCell = cell;
 		$('#startdate_input').val(date);
 		$('#alkuunBlock').removeClass('has-warning has-error').addClass('has-success');
+		alkuunCell.css('background-color', '#85C754');
 	}
-	function setLoppuun(date) {
+	function setLoppuun(date, cell) {
 		loppuunDate = date;
+		loppuunCell = cell;
 		$('#enddate_input').val(date);
 		$('#loppuunBlock').removeClass('has-warning has-error').addClass('has-success');
+		loppuunCell.css('background-color', '#85C754');
 
 	}
 
@@ -102,22 +109,47 @@
 		$('#enddate_input').val('');
 		$('#alkuunBlock').removeClass('has-warning has-error has-success');		
 		$('#loppuunBlock').removeClass('has-warning has-error has-success');
+
+		if (alkuunCell) {
+			alkuunCell.css('background-color', 'white');
+			alkuunCell = null;
+		}
+		if (loppuunCell) {
+			loppuunCell.css('background-color', 'white');
+			loppuunCell = null;
+		}
 	}
 
 	function validateAll() {
 		var alkuun = $('#startdate_input').val();
 		var loppuun = $('#enddate_input').val();
 
+		var alkuunOsat = alkuun.split('.');
+		var loppuunOsat = loppuun.split('.');
+
 		if (!alkuun || alkuun.trim() === '') return;
 		if (!loppuun || loppuun.trim() === '') return;
 
-		if (loppuun < alkuun) {
-		$('#alkuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');		
-		$('#loppuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');			
+		console.log(alkuunOsat);
+		console.log(loppuunOsat);
+
+		var alkuunO = new Date(alkuunOsat[2], alkuunOsat[1], alkuunOsat[0]);
+		var loppuunO = new Date(loppuunOsat[2], loppuunOsat[1], loppuunOsat[0]);
+
+		console.log(alkuunO);
+		console.log(loppuunO);
+
+		if (loppuunO < alkuunO) {
+			$('#alkuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');		
+			$('#loppuunBlock').removeClass('has-warning has-error has-success').addClass('has-warning');
+			alkuunCell.css('background-color', '#F38733');			
+			loppuunCell.css('background-color', '#F38733');			
+
 		}
 	}
 
 	function dayClicked(date) {
+
 
 		var dateO = new Date(date);
 
@@ -129,15 +161,15 @@
 		var dateText = day + "." + month + "." + dateO.getFullYear();
 
 		if (!alkuunDate) {
-			setAlkuun(dateText);
+			setAlkuun(dateText, $(this));
 		}
 		else if (!loppuunDate) {
 			console.log("Setting loppuun");
-			setLoppuun(dateText);
+			setLoppuun(dateText, $(this));
 		}
 		else {
 			emptyBoth();
-			setAlkuun(dateText);
+			setAlkuun(dateText, $(this));
 		}
 		
 		validateAll();
