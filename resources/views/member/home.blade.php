@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-		<title>Cloud Admin Dashboard</title>
-		<meta name="description" content="Cloud Admin Panel" />
-		<meta name="keywords" content="Admin, Dashboard, Bootstrap3, Sass, transform, CSS3, HTML5, Web design, UI Design, Responsive Dashboard, Responsive Admin, Admin Theme, Best Admin UI, Bootstrap Theme, Bootstrap, Light weight Admin Dashboard,Light weight, Light weight Admin, Light weight Dashboard" />
-		<meta name="author" content="Bootstrap Gallery" />
+		<title>{{$targetgroupname}} | {{$currentpage}} | Varausmestari.fi </title>
+		<meta name="description" content="Varausmestari on palvelu yksinkertaiseen varausten hallintaan silloin, kun päivätason varaukset riittävät. Soveltuu esim. pienten hotelleiden, urheiluseurojen ja sukuporukoiden käyttöön." />
+		<meta name="keywords" content="varausmestari, varauspalvelu, varausjärjestelmä, buukkaus, varaa mökki, nollaversio" />
+		<meta name="author" content="Nollaversio IT" />
 		<link rel="shortcut icon" href="img/favicon.ico">
 		
 		<!-- Bootstrap CSS -->
@@ -134,7 +134,7 @@
 				<ul class="pull-left" id="left-nav">
 					<li class="hidden-lg hidden-md hidden-sm">
 						<div class="logo-mob clearfix">
-							<h2><span>Mobiilinäkymä: {{$targetgroupname}}</span></h2>
+							<h2><span>Ryhmä: {{$targetgroupname}}</span></h2>
 						</div>
 					</li>
 					<li>

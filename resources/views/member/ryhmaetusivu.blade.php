@@ -129,6 +129,7 @@
 			defaultDate: '2016-01-12',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
+			eventColor: '#354051',			
 			events: [
 			@foreach ($reservations as $reservation)
 
