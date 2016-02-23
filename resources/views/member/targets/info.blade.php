@@ -4,18 +4,82 @@
 
 
 
+
 @section('content')
 <div class="row no-gutter">
 
     <div class="col-md-6 col-sm-12 col-sx-12">
+    <div class="row no-gutter">
+	    <div class="col-md-12 col-sm-12 col-sx-12">
+				          <div class="panel panel-default">
+
+				            <div class="panel-body">
+				              <div class="list-group no-margin">
+
+				                <a href="#" class="list-group-item">
+				                  <h4 class="list-group-item-heading">Kuvaus</h4>
+				                  <p class="list-group-item-text">{{$target->description}}</p>
+				                </a>
+
+				              </div>			            	
+
+				            </div>
+				            </div>
+		</div>	
+    	<div class="col-md-12 col-sm-12 col-sx-12">
 			          <div class="panel panel-default">
 
 			            <div class="panel-body">
 			              <div class="list-group no-margin">
 
 			                <a href="#" class="list-group-item">
-			                  <h4 class="list-group-item-heading">Kuvaus</h4>
-			                  <p class="list-group-item-text">{{$target->description}}</p>
+			                  <h4 class="list-group-item-heading">Tilastot</h4>
+			              <div class="table-responsive">
+			                <table class="table table-condensed table-striped table-bordered table-hover no-margin">
+			                  <thead>
+			                    <tr>
+			                      <th style="width:60%"></th>
+			                      <th style="width:40%" class="hidden-phone"></th>
+			                    </tr>
+			                  </thead>
+			                  <tbody>
+			                  	<tr>
+				                  	<td>
+				                  		Varauksia yht.
+				                  	</td>
+				                  	<td>
+				                  		{{$target->numOfReservations()}} kpl
+				                  	</td>
+			                  	</tr>
+			                  	<tr>
+				                  	<td>
+				                  		Eniten varannut (määrä)
+				                  	</td>
+				                  	<td>
+				                  		{{$target->infoMostActiveReserverInCount()}}
+				                  	</td>
+			                  	</tr>
+			                  	<tr>
+				                  	<td>
+				                  		Eniten varannut (päivissä)
+				                  	</td>
+				                  	<td>
+				                  		{{$target->infoMostActiveReserverInDays()}}
+				                  	</td>
+			                  	</tr>
+			                  	<tr>
+				                  	<td>
+				                  		Varauksia odottamassa
+				                  	</td>
+				                  	<td>
+				                  		{{$target->numOfReservationsPending()}} kpl
+				                  	</td>
+			                  	</tr>				                    
+
+			                  </tbody>
+			                </table>
+			              </div>
+			                 
 			                </a>
 
 			              </div>			            	
@@ -23,7 +87,12 @@
 			            </div>
 			            </div>
 			            </div>	
+
+	</div> 
+	</div>
     <div class="col-md-6 col-sm-12 col-sx-12">
+    <div class="row no-gutter">
+    	<div class="col-md-12 col-sm-12 col-sx-12">
 			          <div class="panel panel-default">
 
 			            <div class="panel-body">
@@ -35,8 +104,8 @@
 			                <table class="table table-condensed table-striped table-bordered table-hover no-margin">
 			                  <thead>
 			                    <tr>
-			                      <th style="width:70%">Asetus</th>
-			                      <th style="width:30%" class="hidden-phone">Arvo</th>
+			                      <th style="width:70%"></th>
+			                      <th style="width:30%" class="hidden-phone"></th>
 			                    </tr>
 			                  </thead>
 			                  <tbody>
@@ -103,12 +172,15 @@
 			            </div>
 
 			            </div>
-			            </div>				            		            
+			            </div>
+	</div>	
+		            		            
 </div>
-
+</div>
 
 <div class="row no-gutter">
     <div class="col-md-12 col-sm-12 col-sx-12">
+
 			          <div class="panel panel-default">
 
 			            <div class="panel-body">

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  return;
 /* initialize the external events
      -----------------------------------------------------------------*/
 

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Target;
+use App\Targetgroup;
 use App\Reservation;
 
 class ReservationController extends Controller
@@ -115,6 +116,19 @@ class ReservationController extends Controller
         $reservation->delete();
         $request->session()->flash('operationsuccess', 'Varauksesi on poistettu onnistuneesti.');
         return redirect('member/kohteet/' . $kohdeID);     
+    }
+
+
+    // Steps to reservation creation
+    public function reservationCreationStep1(Request $request, $ryhmaID) {
+        $group = Targetgroup::with('targets')->findOrFail($ryhmaID);
+        return view('member/creation/step1')->with('targets', $group->targets);
+    }
+
+    public function reservationCreationStep2(Request $request, $ryhmaID, $kohdeID) {
+        // Return JS app
+        $target = Target::with('reservations')->findOrFail($kohdeID);
+        return view('member/creation/step2')->with('target', $target);
     }
 
     /**

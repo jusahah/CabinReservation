@@ -24,6 +24,8 @@
 		<!-- Slidebar CSS -->
 		<link rel="stylesheet" type="text/css" href="{{asset('css/slidebars.css')}}">
 
+		<link href="{{asset('css/fullcalendar.css')}}" rel="stylesheet">
+
 		<!-- Font Awesome -->
 		<link href="{{asset('fonts/font-awesome.min.css')}}" rel="stylesheet">
 
@@ -96,7 +98,10 @@
 					</div>
 					<div class="alert alert-info">
 						Varausryhmässäsi on <strong>{{$grouptargetcount}}</strong> @if($grouptargetcount == 1) varattava kohde. @else varattavaa kohdetta. @endif
-					</div>					
+					</div>	
+					<a class="btn btn-success" style="width: 100%;" href="{{route('varausvaihe1', ['ryhmaID' => $global_ryhmaID])}}">
+						<strong>Tee varaus</strong><i class="fa fa-calendar" style="font-size: 18px; float:right;"></i> 
+					</a>										
 				</div>
 			</div>
 			<!-- Extras ends -->
@@ -112,7 +117,7 @@
 				<ul class="pull-left" id="left-nav">
 					<li class="hidden-lg hidden-md hidden-sm">
 						<div class="logo-mob clearfix">
-							<h2><div class="fs1" aria-hidden="true" data-icon="&#xe0db;"></div><span>jee</span></h2>
+							<h2><span>Mobiilinäkymä: {{$targetgroupname}}</span></h2>
 						</div>
 					</li>
 					<li>
@@ -124,10 +129,11 @@
 				</ul>
 				<div class="pull-right">
 				
-				<h4 style="margin-top: 18px;"><span class="label label-info">Varausryhmä: {{$targetgroupname}}</span></h4>
+				<h4 class="hidden-sm hidden-xs" style="margin-top: 18px;"><span class="label label-info">Varausryhmä: {{$targetgroupname}}</span></h4>
 
-	<!--
+
 					<ul id="mini-nav" class="clearfix">
+						<!--
 						<li class="list-box hidden-xs">
 							<a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
 								<div class="fs1" aria-hidden="true" data-icon="&#xe129;"></div>
@@ -240,8 +246,15 @@
 								<i class="fa fa-reorder"></i>
 							</a>
 						</li>
+						-->
+											<li class="list-box hidden-lg hidden-md hidden-sm" id="mob-nav">
+							<a href="#">
+								<i class="fa fa-reorder"></i>
+							</a>
+						</li>
 					</ul>
-					-->
+					
+
 				</div>
 			</header>
 			<!-- Header ends -->
@@ -342,8 +355,10 @@
 		<script src="js/flot/flot.excanvas.min.js"></script>
 		-->
 
-		<!-- Custom flot JS -->
-		<script src="{{asset('js/flot/custom/combine-chart.js')}}"></script>
+		<script src="{{asset('js/calendar/fullcalendar.min.js')}}"></script>
+
+		<!-- Custom flot JS 
+		<script src="{{asset('js/flot/custom/combine-chart.js')}}"></script>-->
 
 		<!-- Animated Right Sidebar -->
 		<script src="{{asset('js/slidebars.js')}}"></script>
@@ -358,5 +373,7 @@
 		<!-- Custom JS -->
 		<script src="{{asset('js/custom.js')}}"></script>
 		<script src="{{asset('js/custom-index.js')}}"></script>
+
+		@yield('customJS')
 	</body>
 </html>

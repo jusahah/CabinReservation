@@ -55,7 +55,7 @@ class Reservation extends Model
 
 		$diff = $date2->diff($date1)->format("%a");
 
-		return $diff;
+		return $diff+1;
 	}
 
 }
