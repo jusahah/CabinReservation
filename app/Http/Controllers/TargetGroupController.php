@@ -59,6 +59,7 @@ class TargetGroupController extends Controller
         }
 
         $reservations = collect($reservations);
+        $reservations = $reservations->sortByDesc('startdate');
 
 
         return view('member/reservationlog')->with('reservations', $reservations);

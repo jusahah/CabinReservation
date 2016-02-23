@@ -38,13 +38,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 		Route::group(['middleware' => 'targetPartOfTargetGroup'], function() {
 			// Now we handle target-level details, so we dispatch to TargetController
 			Route::get('{ryhmaID}/kohteet/{kohdeID}', ['as' => 'kohdeinfo', 'uses' => 'TargetController@showTargetInfo']);
+			Route::get('{ryhmaID}/kohteet/{kohdeID}/kalenteri', ['as' => 'kohdekalenteri', 'uses' => 'TargetController@showTargetCalendar']);
 			Route::get('kohteet/{kohdeID}/varaukset', ['as' => 'kohteenvaraukset', 'uses' => 'ReservationController@targetReservations']);
 
 			// Steps to create reservation (step 2, step 3)
 			Route::get('{ryhmaID}/kohteet/{kohdeID}/varaukset/luo/vaihe_2', ['as' => 'varausvaihe2', 'uses' => 'ReservationController@reservationCreationStep2']);
 			Route::post('{ryhmaID}/kohteet/{kohdeID}/varaukset/luo/vaihe_2', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
 
-			Route::post('kohteet/{kohdeID}/varaukset', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
+			//Route::post('kohteet/{kohdeID}/varaukset', ['as' => 'luovaraus', 'uses' => 'ReservationController@createReservation']);
 			Route::get('{ryhmaID}/kohteet/{kohdeID}/varaukset/{varausID}', ['as' => 'varausinfo', 'uses' => 'ReservationController@showReservation']);
 			
 			// These are routes that only owner of reservation can hit

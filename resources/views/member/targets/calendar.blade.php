@@ -1,30 +1,14 @@
 @extends('member/home')
 
-@section('pagename', 'Varaus 2/2 - Valitse päivämäärät')
+@section('pagename', 'Kalenteri | ' . $target->name)
 
 
 
 @section('content')
 
 
-
+<div class="row no-gutter">
     <div class="col-md-12 col-sm-12 col-sx-12">
-			          <div class="panel panel-default">
-
-			            <div class="panel-body">
-			            				              <div class="list-group no-margin">
-
-				 
-				                  <h4 class="list-group-item-heading">Valittu kohde: {{$target->name}}</h4>
-				                  
-				             
-
-				              </div>	
-			             
-			            </div>
-			          </div>
-			        <div class="row no-gutter">
-			          <div class="col-md-7 col-sm-7 col-sx-12">
 			          <div class="panel">
 									<div class="panel-heading">
 
@@ -37,44 +21,14 @@
 									</div>
 									<div class="panel-body">
 										<div id='calendar' style="margin: auto;"></div>
+										<hr>
+										<div class="form-group">
+										<a class="btn btn-primary btn-xs" href="{{route('varausvaihe2', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}">Tee varaus tähän kohteeseen</a>
+										</div>
 									</div>
-								</div>
-			        </div>
-			          <div class="col-md-5 col-sm-5 col-sx-12">
-			          <div class="panel">
-									<div class="panel-heading">
-									</div>
-									<div class="panel-body">
-										<form method="POST" action="{{route('luovaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}">
-								        {!! csrf_field() !!}
-								        <p><i>Voit lisätä päivämäärät joko kirjoittamalla ne muodossa '31.12.2015' tai klikkaamalla kalenterista!</i></p>
-								        <div id="alkuunBlock" class="form-group">
-								            <label for="exampleInputEmail1">Alkaa (pvm)</label>
-								            
-								            <input type="text" id="startdate_input" name="startdate" placeholder="01.01.2016" class="form-control">
-								        </div>
-
-								        <div id="loppuunBlock" class="form-group">
-								            <label for="exampleInputEmail1">Loppuu (pvm)</label>
-								           
-								            <input type="text" id="enddate_input" name="enddate" class="form-control" placeholder="05.01.2016">
-								        </div>
-								        <hr>
-								        <div id="notesBlock" class="form-group has-success">
-								            <label for="exampleInputEmail1">Lisätiedot muille ryhmän jäsenille (max. 512 merkkiä)</label>
-								            <textarea name='notes' id="notesArea" rows="4" class="form-control input-lg" style="font-size: 14px;"></textarea>
-								        </div>          
-             							<p><i>Ennen varauksen vahvistamista, tarkistathan vielä, että päivämäärät ovat oikein. Varaus ei mene lävitse jos
-             							päivämäärät ovat väärät (esim. sisältävät päiviä, jotka eivät ole vapaina).</i></p>
-								        <div>
-								            <button type="submit" class="btn btn-primary">Vahvista uusi varaus</button>
-								        </div>
-								    </form>
-									</div>
-								</div>
-			        </div>			        
-			        </div>
-			        </div>
+					  </div>   
+	</div>
+</div>
 @endsection
 
 

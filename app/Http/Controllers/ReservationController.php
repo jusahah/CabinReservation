@@ -55,8 +55,10 @@ class ReservationController extends Controller
     }
 
     // POST route
-    public function createReservation(Request $request, $kohdeID) {
-        $validator = \Validator::make($request->all(), Reservation::validationRules());
+    public function createReservation(Request $request, $ryhmaID, $kohdeID) {
+
+
+        $validator = \Validator::make($request->all(), Reservation::suomiValidationRules());
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();            
         }
@@ -65,10 +67,13 @@ class ReservationController extends Controller
         // And check that user has no other reservations active if allowTwoReservationsBySameUser is set false
         $input = $request->all();
 
-        $startDate = $input['startdate'];
-        $endDate   = $input['enddate'];
 
-        if (!$this->checkReservationOverlap($kohdeID, $startDate, $endDate)) {
+        $input['startdate'] = date('Y-m-d', strtotime($input['startdate']));
+        $input['enddate']   = date('Y-m-d', strtotime($input['enddate']));
+
+
+
+        if (!$this->checkReservationOverlap($kohdeID, $input['startdate'], $input['enddate'])) {
             $request->session()->flash('operationfail', 'Varausta epäonnistui. Tarkista päivämäärät. Et voi varata päivälle, jolle on jo varaus olemassa.');
             return back()->withInput();
 
@@ -82,7 +87,7 @@ class ReservationController extends Controller
 
          // Success
         $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! <a>Tarkastele varaustasi tästä.</a>'); 
-        return redirect('member/kohteet/' . $kohdeID . '/varaukset');
+        return redirect()->route('jasenetusivu', ['ryhmaID' => $ryhmaID]);
 
     }
 

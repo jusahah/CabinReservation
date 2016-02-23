@@ -35,6 +35,12 @@ class TargetController extends Controller
 
     }
 
+    public function showTargetCalendar(Request $request, $ryhmaID, $kohdeID) {
+        $target = Target::findOrFail($kohdeID);
+        return view('member/targets/calendar')->with('target', $target);
+
+    }
+
     public  function showTargetInfo(Request $request, $ryhmaID, $kohdeID) {
         $target = Target::findOrFail($kohdeID);
         $isAdmin = \Auth::id() == $target->targetgroup->user_id;

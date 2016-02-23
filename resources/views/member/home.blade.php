@@ -99,9 +99,11 @@
 					<div class="alert alert-info">
 						Varausryhmässäsi on <strong>{{$grouptargetcount}}</strong> @if($grouptargetcount == 1) varattava kohde. @else varattavaa kohdetta. @endif
 					</div>	
-					<a class="btn btn-success" style="width: 100%;" href="{{route('varausvaihe1', ['ryhmaID' => $global_ryhmaID])}}">
+					<div class="alert alert-success" style="width: 100%; padding: 0px;">
+					<a href="{{route('varausvaihe1', ['ryhmaID' => $global_ryhmaID])}}" style="color: white; width: 100%; height: 42px; display: block; padding: 12px; " >
 						<strong>Tee varaus</strong><i class="fa fa-calendar" style="font-size: 18px; float:right;"></i> 
-					</a>										
+						</a>
+					</div>										
 				</div>
 			</div>
 			<!-- Extras ends -->

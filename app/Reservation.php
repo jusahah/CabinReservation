@@ -23,8 +23,21 @@ class Reservation extends Model
     	'notes' => 'string|max:512',
     );
 
+    public static $suomirules = array(
+    	//'user_id' => 'required|integer', 
+    	//'original_user_id' => 'required|integer', 
+    	'startdate' => 'required|date_format:d.m.Y', 
+    	'enddate' => 'required|date_format:d.m.Y', 
+    	'notes' => 'string|max:512',
+    );
+
+
     public static function validationRules() {
     	return self::$rules;
+    }
+
+    public static function suomiValidationRules() {
+    	return self::$suomirules;
     }
 
 	public function target() {
