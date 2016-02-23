@@ -37,7 +37,7 @@ class PageController extends Controller
         }
 
         $reservations = collect($reservations);
-
+        view()->share('currentpage', 'etusivu'); // This route is one of the sidebar menu links
         return view('member/ryhmaetusivu')->with('group', $group)->with('reservations', $reservations);
     }
 

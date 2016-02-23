@@ -71,4 +71,13 @@ class Reservation extends Model
 		return $diff+1;
 	}
 
+	public function doIOwnThis() {
+		return \Auth::user() == $this->user;
+	}
+
+	public function canStillBeCancelled() {
+		$today = date('Y-m-d');
+		return $this->startdate > $today;
+	}
+
 }

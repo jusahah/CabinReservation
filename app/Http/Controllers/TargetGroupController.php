@@ -26,14 +26,17 @@ class TargetGroupController extends Controller
         $group = Targetgroup::findOrFail($targetgroupID);
         $targets = $group->targets()->with('reservations')->get();
 
+        view()->share('currentpage', 'kohdeluettelo'); // This route is one of the sidebar menu links
+
         return view('member/targets/all')
             ->with('targetgroup', $group)
             ->with('targets', $targets);
     }
 
         // GET route
-    public function showTargetCreation(Request $request) {
+    public function showTargetCreation(Request $request, $ryhmaID) {
 
+        view()->share('currentpage', 'luokohde'); // This route is one of the sidebar menu links
         return view('member/createtarget');
 
     }
@@ -42,7 +45,7 @@ class TargetGroupController extends Controller
 
         // Everytime we get this far we know user has a right to see group-level information
         $group = Targetgroup::findOrFail($ryhmaID);
-
+        view()->share('currentpage', 'jasenet'); // This route is one of the sidebar menu links
         return view('member/groupmembers')->with('members', $group->members()->get());
     }
 
@@ -61,7 +64,7 @@ class TargetGroupController extends Controller
         $reservations = collect($reservations);
         $reservations = $reservations->sortByDesc('startdate');
 
-
+        view()->share('currentpage', 'loki'); // This route is one of the sidebar menu links
         return view('member/reservationlog')->with('reservations', $reservations);
     }
 

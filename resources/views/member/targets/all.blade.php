@@ -72,10 +72,12 @@
 			                            </li>
 			                            <li>
 			                              <a href="{{route('varausvaihe2', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Varauskalenteri</a>
-			                            </li>			                            
+			                            </li>	
+			                            @if($isAdmin)		                            
 			                            <li>
 			                              <a href="{{route('tuhoakohde', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" data-original-title="">Poista</a>
 			                            </li>
+			                            @endif
 			                          </ul>
 			                        </div>
 			                      </td>

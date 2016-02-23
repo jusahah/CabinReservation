@@ -41,6 +41,7 @@ abstract class Controller extends BaseController
     	}
 
     	view()->share('global_ryhmaID', $targetgroupID);
+        view()->share('currentpage', ''); // Initialize so its available. Speficic controllers may override value.
 
 
 

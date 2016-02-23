@@ -72,9 +72,14 @@
 			                  </tbody>
 			                </table>
 			              </div>
+			              <hr>
+			              @if($isAdmin)
+			              <a href="{{route('tuhoavaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $reservation->target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Poista</a>
+			              @elseif($reservation->doIOwnThis() && $reservation->canStillBeCancelled())
+			              <a href="{{route('peruvaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $reservation->target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Peru</a>
+			               @endif			              
 
-
-
+		              
 			</div>
 		</div>
 	</div>

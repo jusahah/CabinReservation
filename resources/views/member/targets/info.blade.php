@@ -114,23 +114,27 @@
 				                  		Yksi varaus kerrallaan / käyttäjä
 				                  	</td>
 				                  	<td>
-				                  		<span class="label label-success">Kyllä</span>
+				                  	@if($target->allowTwoReservationsBySameUser == 0)
+				                  		<span class="label label-danger">Pois päältä</span>
+				                  	@else
+				                  		<span class="label label-success">Päällä</span>
+				                  	@endif	
 				                  	</td>
 			                  	</tr>
 			                  	<tr>
 				                  	<td>
-				                  		Varauksen minimikesto (päivissä)
+				                  		Varauksen minimikesto
 				                  	</td>
 				                  	<td>
-				                  		2
+				                  		{{$target->minReservationLength}} päivää
 				                  	</td>
 			                  	</tr>
 			                  	<tr>
 				                  	<td>
-				                  		Varauksen maksimikesto (päivissä)
+				                  		Varauksen maksimikesto
 				                  	</td>
 				                  	<td>
-				                  		5
+				                  		{{$target->maxReservationLength}} päivää
 				                  	</td>
 			                  	</tr>
 			                  	<tr>
@@ -138,7 +142,13 @@
 				                  		Email kun kohde varataan
 				                  	</td>
 				                  	<td>
-				                  		Kaikille
+				                  	@if($target->emailWhenSomebodyReserves == 0)
+				                  		Ei kellekään
+				                  	@elseif($target->emailWhenSomebodyReserves == 1)
+				                  		Vain adminille
+				                  	@else
+				                  		Koko ryhmälle
+				                  	@endif			
 				                  	</td>
 			                  	</tr>				                    
 			                  	<tr>
@@ -146,9 +156,16 @@
 				                  		Email kun varaus perutaan
 				                  	</td>
 				                  	<td>
+				                  	@if($target->emailWhenSomebodyCancels == 0)
 				                  		Ei kellekään
+				                  	@elseif($target->emailWhenSomebodyCancels == 1)
+				                  		Vain adminille
+				                  	@else
+				                  		Koko ryhmälle
+				                  	@endif		
 				                  	</td>
 			                  	</tr>	
+			                  	<!--
 			                  	<tr>
 				                  	<td>
 				                  		Email kun info-viesti julkaistaan
@@ -157,16 +174,18 @@
 				                  		Ei kellekään
 				                  	</td>
 			                  	</tr>
+			                  	-->
 
 			                  </tbody>
 			                </table>
 			              </div>			                  
 			                </a>
 
-			              </div>			            	
+			              </div>	
+			              @if($isAdmin)		            	
 			            <hr>
 			            	<a href="{{route('muokkaakohdetta', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}" class="btn btn-primary">Muuta asetuksia</a>
-			            
+			            @endif
 			            
 	
 			            </div>
@@ -184,13 +203,13 @@
 			          <div class="panel panel-default">
 
 			            <div class="panel-body">
-
+			            <h4 class="list-group-item-heading">Varaukset</h4>
 			              <div class="table-responsive">
 			                <table class="table table-condensed table-striped table-bordered table-hover no-margin">
 			                  <thead>
 			                    <tr>
-			                      <th style="width:15%">Varaus alkaa</th>
-			                      <th style="width:15%" class="hidden-phone">Varaus loppuu</th>
+			                      <th style="width:15%">Alkaa</th>
+			                      <th style="width:15%" class="hidden-phone">Loppuu</th>
 			                      <th style="width:30%" class="hidden-phone">Varaaja</th>
 			                      <th style="width:30%" class="hidden-phone">Lisätiedot</th>
 			                      <th style="width:10%" class="hidden-phone">Toimenpiteet</th>
@@ -215,7 +234,7 @@
 			                      <td class="hidden-phone">
 			                      	@if($isAdmin)
 			                        <a href="{{route('tuhoavaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Poista</a>
-			                      	@elseif($me == $reservation->user->id)
+			                      	@elseif($me == $reservation->user->id && $reservation->canStillBeCancelled())
 			                      	<a href="{{route('peruvaraus', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id, 'varausID' => $reservation->id])}}" class="btn btn-danger">Peru</a>
 			                      	@endif
 

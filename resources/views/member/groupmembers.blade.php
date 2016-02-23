@@ -1,6 +1,6 @@
 @extends('member/home')
 
-@section('pagename', 'Varausryhmäsi jäsenet')
+@section('pagename', 'Ryhmän jäsenet')
 
 
 

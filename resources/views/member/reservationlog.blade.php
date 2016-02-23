@@ -26,7 +26,7 @@
 			                  @foreach($reservations as $reservation)
 			                    <tr>
 			                      <td>
-			                        <span class="name">{{$reservation->target->name}}</span>
+			                        <span class="name"><a href="{{route('kohdeinfo', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $reservation->target->id])}}">{{$reservation->target->name}}</a></span>
 			                      </td>
 			                      <td class="hidden-phone">
 			                     	{{$reservation->user->name}}

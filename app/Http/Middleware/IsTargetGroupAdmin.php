@@ -22,8 +22,9 @@ class IsTargetGroupAdmin
 
          $group = Targetgroup::findOrFail($tgid);
 
-         if (!$group->user_id === \Auth::id()) {
-            return redirect('member/home')->with('error', 'Sinun täytyy olla varausryhmän admin suorittaaksesi toiminnon!');
+         if ($group->user_id !== \Auth::id()) {
+            \Session::flash('operationfail', 'Estetty. Vain ryhmän admin voi suorittaa yrittämäsi operaation.');
+            return redirect()->route('jasenetusivu', ['ryhmaID' => $tgid])->with('error', 'Sinun täytyy olla varausryhmän admin suorittaaksesi toiminnon!');
 
          }
 

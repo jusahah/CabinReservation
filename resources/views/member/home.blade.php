@@ -54,14 +54,20 @@
 			<!-- Menu start -->
 			<div id='menu'>
 				<ul>
-					<li class='highlight'>
+					<li @if($currentpage == 'etusivu') class="highlight" @endif>
+						<a href='{{route("jasenetusivu", ["ryhmaID" => $global_ryhmaID])}}'>
+							<div class="fs1" aria-hidden="true" data-icon="&#xe007;"></div>
+							<span>Ryhmän etusivu</span>
+						</a>
+					</li>				
+					<li @if($currentpage == 'kohdeluettelo') class="highlight" @endif>
 						<a href='{{route("kohteet", ["ryhmaID" => $global_ryhmaID])}}'>
 							<div class="fs1" aria-hidden="true" data-icon="&#xe007;"></div>
 							<span>Kohdeluettelo</span>
 						</a>
 					</li>
 					@if($isAdmin)
-					<li>
+					<li @if($currentpage == 'luokohde') class="highlight" @endif>
 						<a href="{{route('luokohdeform', ['ryhmaID' => $global_ryhmaID])}}">
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0f8;"></div>
 							<span>Luo uusi kohde</span>
@@ -69,13 +75,13 @@
 					</li>
 					@endif
 
-					<li>
+					<li @if($currentpage == 'loki') class="highlight" @endif>
 						<a href="{{route('ryhmanloki', ['ryhmaID' => $global_ryhmaID])}}">
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0e6;"></div>
 							<span>Varausloki</span>
 						</a>
 					</li>
-					<li>
+					<li @if($currentpage == 'jasenet') class="highlight" @endif>
 						<a href="{{route('ryhmanjasenet', ['ryhmaID' => $global_ryhmaID])}}">
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0f2;"></div>
 							<span>Jäsenlista</span>
