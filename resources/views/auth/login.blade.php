@@ -51,11 +51,11 @@
                 </div>
                 <div id="inputs">
                     <div class="form-control">
-                        <input type="text" placeholder="Sähköpostiosoite" name="email" value="{{ old('email') }}">
+                        <input type="text" placeholder="Sähköpostiosoitteesi" name="email" value="{{ old('email') }}">
                         <i class="fa fa-envelope-o"></i>
                     </div>
                     <div class="form-control">
-                        <input type="password" name="password" placeholder="Password">
+                        <input type="password" name="password" placeholder="Salasanasi">
                         <i class="fa fa-key"></i>
                     </div>
                     <input type="submit" value="Kirjaudu">

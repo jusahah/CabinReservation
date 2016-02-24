@@ -23,6 +23,7 @@ Route::post('/jasenyys/{ryhmaURINimi}', ['as' => 'hakemussisaan', 'uses' => 'Joi
 Route::get('/admin/luo', ['as' => 'uusiadmin', 'uses' => 'GuestController@showAdminCreation']);
 Route::post('admin/uusiryhma', ['as' => 'luoryhma', 'uses' => 'GuestController@createGroup']);
 // Authentication routes...
+Route::get('kirjaudu', 'Auth\AuthController@getLogin'); // Easier for finns to remember
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', ['as' => 'login', 'middleware' => 'checkIsActivated', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
