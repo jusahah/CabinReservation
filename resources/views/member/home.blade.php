@@ -66,6 +66,7 @@
 							<span>Kohdeluettelo</span>
 						</a>
 					</li>
+					
 					@if($isAdmin)
 					<li @if($currentpage == 'luokohde') class="highlight" @endif>
 						<a href="{{route('luokohdeform', ['ryhmaID' => $global_ryhmaID])}}">
@@ -87,6 +88,14 @@
 							<span>Jäsenlista</span>
 						</a>
 					</li>
+					@if($isAdmin)
+					<li @if($currentpage == 'jasenhakemukset') class="highlight" @endif>
+						<a href="{{route('jasenhakemukset', ['ryhmaID' => $global_ryhmaID])}}">
+							<div class="fs1" aria-hidden="true" data-icon="&#xe0f8;"></div>
+							<span>Jäsenhakemukset</span>
+						</a>
+					</li>	
+					@endif				
 					<li>
 						<a href="{{route('logout')}}">
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0f2;"></div>

@@ -73,6 +73,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 		// Stuff only admin can do
 		Route::group(['middleware' => 'isTargetGroupAdmin'], function() {
 			Route::get('{ryhmaID}/jasenhakemukset', ['as' => 'jasenhakemukset', 'uses' => 'TargetGroupController@showApplications']);
+			Route::get('{ryhmaID}/jasenhakemukset/{jasenID}/hyvaksy', ['as' => 'hyvaksyjasen', 'uses' => 'TargetGroupController@acceptApplication']);
+
 			Route::post('{ryhmaID}/kohteet', ['as' => 'luokohde', 'uses' => 'TargetController@createTarget']);
 			// Edit target settings
 			Route::get('{ryhmaID}/kohteet/{kohdeID}/muokkaa', ['as' => 'muokkaakohdetta', 'uses' => 'TargetController@showEditTarget']);
@@ -90,6 +92,9 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 	});
 });
 
+// If nothing above hits
+Route::get('{ryhmaURINimi}/{kohdeURINimi}', ['uses' => 'GuestController@guestViewOfTarget']);
+Route::get('{ryhmaURINimi}', ['uses' => 'GuestController@guestViewOfGroup']);
 
 
 // Registration routes...

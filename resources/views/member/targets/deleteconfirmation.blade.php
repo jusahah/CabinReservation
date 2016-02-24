@@ -15,10 +15,11 @@
 			                <p><strong>Huomioi, että tätä toimenpidettä ei voi perua.</strong></p>
 
     <p>Huomioithan myös, että mikäli kohteeseen on varauksia olemassa, ne poistuvat automaattisesti poistaessasi kohteen.</p>
+		<p>Suosittelemme poistoa vain mikäli kohde on luotu vahingossa esim. väärällä nimellä eikä siihen ole ehtinyt tulla varauksia.</p>
 			              <form role="form" method="POST" action="{{route('tuhoakohdevahvistettu', ['ryhmaID' => $global_ryhmaID, 'kohdeID' => $target->id])}}">
 			              	{!! csrf_field() !!}
 			                <button type="submit" class="btn btn-danger">Vahvista poisto</button>
-			                <a href="{{route('kohteet')}}" class="btn btn-primary">Peru</a>
+		
 			              </form>
 			            </div>
 			          </div>

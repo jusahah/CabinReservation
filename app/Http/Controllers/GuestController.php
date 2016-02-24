@@ -7,25 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Targetgroup;
-
-class PageController extends Controller
+class GuestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function __construct(Request $r) {
-        parent::__construct($r);
-    }
+        parent::__construct($r, false);
+    } 
 
-    public function index()
-    {
-        //
-    }
-    // This method is duplicated here and in GuestController
-    // Its of course good example why we'd better have that fucker Service Layer 
     protected function getAllReservationsInGroup($group) {
 
         $targets = $group->targets;
@@ -41,24 +28,33 @@ class PageController extends Controller
         return $reservations;
     }
 
-    public function memberFront(Request $request, $ryhmaID) {
+    public function guestViewOfTarget(Request $request, $ryhmaURINimi, $kohdeURINimi) {
 
-        $group = Targetgroup::with('targets')->with('targets.reservations')->findOrFail($ryhmaID);
+        $group = $this->findGroupByURI($ryhmaURINimi);
+        
+        $targets = $group->targets()->get();
+        $correctTarget = null;
+        foreach($targets as $k => $target) {
+            if ($target->getURIName() == $kohdeURINimi) {
+                $correctTarget = $target;
+            }
+        }
+
+        if (!$correctTarget) return response('Kohdetta ei löytynyt', 404);
+
+        return view('guest/targetcalendar')->with('group', $group)->with('target', $correctTarget);
+
+    }
+
+    public function guestViewOfGroup(Request $request, $ryhmaURINimi) {
+        $group = $this->findGroupByURI($ryhmaURINimi);
         $reservations = $this->getAllReservationsInGroup($group);
 
-        view()->share('currentpage', 'etusivu'); // This route is one of the sidebar menu links
-        return view('member/ryhmaetusivu')->with('group', $group)->with('reservations', $reservations);
+        return view('guest/groupcalendar')->with('group', $group)->with('reservations', $reservations);
+
     }
 
-    public function showNoGroupFront(Request $request) {
-        // Check to make sure he has no group
-        $tgid = \Auth::user()->targetgroup_id;
-        if ($tgid) return redirect()->route('jasenetusivu', ['ryhmaID' => $tgid]);
-        return view('member/nogroup');
-    }
-
-    /*
-    protected function findGroupIDByURI($ryhmaURINimi) {
+    protected function findGroupByURI($ryhmaURINimi) {
          $groups = Targetgroup::select('id', 'name')->get();
 
          foreach ($groups as $key => $group) {
@@ -81,6 +77,4 @@ class PageController extends Controller
 
          throw new ModelNotFoundException();
     }    
-    */
-
 }

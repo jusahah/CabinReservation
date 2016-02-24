@@ -31,7 +31,7 @@ abstract class Controller extends BaseController
     	try {
     		$group = Targetgroup::findOrFail($targetgroupID);
     		view()->share('targetgroupname', $group->name);
-    		view()->share('groupmembercount', count($group->members()->get()));
+    		view()->share('groupmembercount', count($group->members()->where('isActivated', 1)->get()));
     		view()->share('grouptargetcount', count($group->targets()->get()));
             $isAdmin = $group->user_id == \Auth::id();
             view()->share('isAdmin', $isAdmin);

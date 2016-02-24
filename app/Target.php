@@ -157,4 +157,14 @@ class Target extends Model
 
     }
 
+    // Return value to be used in join requests and etc.
+    // Note that exactly same method as in Targetgroup model
+    public function getURIName() {
+
+        // As two targets can have same name we need to attach ID 
+        $toBeSlugified = $this->name . " " . $this->id;
+        return str_slug($toBeSlugified, "-");
+
+    }    
+
 }

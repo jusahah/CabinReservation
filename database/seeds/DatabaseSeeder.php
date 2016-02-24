@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $me = User::findOrFail(1);
         $me->targetgroup_id = 2;
-        $me->isActivated = true; // Auto-activate admin users
+        $me->isActivated = 1; // Auto-activate admin users
         $me->save();
 
         $group = App\Targetgroup::find(2);
