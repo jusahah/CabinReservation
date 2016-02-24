@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route to member registration into particular ryhma
+Route::get('/jasenyys/{ryhmaURINimi}', ['as' => 'haejasenyytta', 'uses' => 'JoinGroupController@requestMembership']);
+Route::post('/jasenyys/{ryhmaURINimi}', ['as' => 'hakemussisaan', 'uses' => 'JoinGroupController@processMembershipApplication']);
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
+
 Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 	
 	Route::get('etusivu', ['as' => 'eiryhmaa', 'uses' => 'PageController@showNoGroupFront']);
@@ -81,11 +89,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 	});
 });
 
-// Authentication routes...
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@postLogin']);
-Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
+
 
 // Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
+//Route::get('auth/register', 'Auth\AuthController@getRegister');
+//Route::post('auth/register', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);

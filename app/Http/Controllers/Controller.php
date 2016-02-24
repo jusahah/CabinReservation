@@ -18,7 +18,10 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function __construct(Request $request) {
+    public function __construct(Request $request, $hasTargetgroup = true) {
+
+        // What a dirty hack this is...
+        if (!$hasTargetgroup) return;
 
     	$targetgroupID = $request->input('targetgroup_id');
 

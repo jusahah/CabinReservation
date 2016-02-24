@@ -22,6 +22,17 @@ class Targetgroup extends Model
     public function members() {
     	return $this->hasMany('App\User');
     }
+    // Return value to be used in join requests and etc.
+    public function getURIName() {
 
+        // As two groups can have same name we need to attach ID 
+        $toBeSlugified = $this->name . " " . $this->id;
+        return str_slug($toBeSlugified, "-");
+
+    }
+
+    public function autoJoin() {
+        return true; // For now
+    }
 
 }

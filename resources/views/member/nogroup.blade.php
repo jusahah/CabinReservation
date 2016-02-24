@@ -1,6 +1,6 @@
 @extends('member/nogroup_layout')
 
-@section('pagename', 'Ryhmän jäsenyys vaaditaan')
+@section('pagename', 'Hae ryhmän jäsenyyttä')
 
 
 

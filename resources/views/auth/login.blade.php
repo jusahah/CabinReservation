@@ -35,13 +35,21 @@
                         </ul>
                     </div>
                 @endif
+
+                @if (Session::has('operationsuccess'))
+                            <div class="alert alert-success">
+                            <div class="alert-body">
+                            <p>{{Session::get('operationsuccess')}}</p>
+                            </div>
+                            </div>
+                @endif  
                 <div id="top_header">
 
                     <h5>
                         Vaatii kirjautumisen
                     </h5>
                 </div>
-                <di id="inputs">
+                <div id="inputs">
                     <div class="form-control">
                         <input type="text" placeholder="" name="email" value="{{ old('email') }}">
                         <i class="fa fa-envelope-o"></i>
@@ -51,7 +59,7 @@
                         <i class="fa fa-key"></i>
                     </div>
                     <input type="submit" value="Kirjaudu">
-                </di>
+                </div>
                 <div id="bottom">
                     <div class="squared-check">
                         <input type="checkbox" value="None" id="remember" name="check" checked="">
