@@ -22,7 +22,7 @@
 										<h3 style="text-align: center;">{{$group->name}}</h3>
 										<p style="text-align: center;">{{$group->description}}</p>
 										<hr>
-										<div id='calendar' style="margin: auto; max-width: 960px; max-height: 960px;"></div>
+										<div id='calendar' style="margin: auto; max-width: 760px; max-height: 760px;"></div>
 										<hr style="width: 30%;">
 										<p style="text-align: center;"><i>Tämä on vieraille tarkoitettu näkymä kalenteriin. Jos haluat tehdä/muokata varauksia,
 										sinun täytyy olla <a href="{{url('auth/login')}}">kirjautuneena palveluun</a> ja hyväksytty kohteen jäseneksi. Vain ryhmän jäsenet voivat
