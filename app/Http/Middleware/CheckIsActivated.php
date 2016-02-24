@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 use Closure;
 
 class CheckIsActivated
@@ -23,8 +23,12 @@ class CheckIsActivated
 
         $email = $request->input('email');
 
-
-        $user = \App\User::where('email', $email)->firstOrFail();
+        try {
+            $user = \App\User::where('email', $email)->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            return back()->withErrors(array('message' => 'Sähköpostiosoitetta ei löytynyt'));
+        }
+        
         $group = $user->targetgroup;
 
         if (!$group) return response('Ryhmää ei liitetty käyttäjätunnukseesi - ota yhteys ylläpitoon', 403);
