@@ -59,6 +59,8 @@
                         <i class="fa fa-key"></i>
                     </div>
                     <input type="submit" value="Kirjaudu">
+                    <hr style="width: 30%;">
+                    <a class="button btn btn-primary" href="{{route('uusiadmin')}}" style="text-align: center; display: block; margin: auto; width: 220px; background-color: #F56B6B; color: white; padding: 6px;">Luo uusi admin-tunnus</a>
                 </div>
 
                 <p style="color: #F56B6B; margin: 8px; font-size: 10px; bottom: 8px; left: 10px; position: absolute;"></i>Copyright Nollaversio IT | 2016 | Proudly using Laravel 5.1.0</i></p>

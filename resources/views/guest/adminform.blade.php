@@ -59,13 +59,13 @@
                     <input type="password" name="password_confirmation" placeholder="Vahvista salasana" >
                         <i class="fa fa-key"></i>
                     </div>
-                    <h4 style="color: #222; text-align: center;">Ryhmän tiedot</h4>
+                    <h4 style="color: #222; text-align: center;" title="Syötä ryhmän nimi ja vapaaehtoinen kuvaus!">Ryhmän tiedot</h4>
                     <div class="form-control">
-                    <input type="text" name="ryhmanimi" placeholder="Ryhmän nimi (max. 64 merkkiä)" >
+                    <input type="text" name="ryhmanimi" title="Esim. 'Mäntsälän leirialueen mökit'" placeholder="Ryhmän nimi (max. 64 merkkiä)" >
 
                     </div>
                     <div class="form-control">
-                    <input type="text" name="ryhmakuvaus" placeholder="Ryhmän kuvaus (max. 512 merkkiä)" >
+                    <input type="text" name="ryhmakuvaus" title="Esim. 'Mäntsälässä sijaitsevan Vehkajärven leirialueen kesämökkien varaus'" placeholder="Ryhmän kuvaus (max. 512 merkkiä)" >
          
                     </div>                                        
                     <input type="submit" value="Luo ryhmä">

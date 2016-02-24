@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('kirjaudu');
 });
 
 // Route to member registration into particular ryhma
