@@ -20,7 +20,7 @@ Route::get('/jasenyys/{ryhmaURINimi}', ['as' => 'haejasenyytta', 'uses' => 'Join
 Route::post('/jasenyys/{ryhmaURINimi}', ['as' => 'hakemussisaan', 'uses' => 'JoinGroupController@processMembershipApplication']);
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::post('auth/login', ['as' => 'login', 'middleware' => 'checkIsActivated', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
 Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 
 		// Stuff only admin can do
 		Route::group(['middleware' => 'isTargetGroupAdmin'], function() {
+			Route::get('{ryhmaID}/jasenhakemukset', ['as' => 'jasenhakemukset', 'uses' => 'TargetGroupController@showApplications']);
 			Route::post('{ryhmaID}/kohteet', ['as' => 'luokohde', 'uses' => 'TargetController@createTarget']);
 			// Edit target settings
 			Route::get('{ryhmaID}/kohteet/{kohdeID}/muokkaa', ['as' => 'muokkaakohdetta', 'uses' => 'TargetController@showEditTarget']);

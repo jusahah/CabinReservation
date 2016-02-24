@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 
 use App\Targetgroup;
+use App\User;
 
 class JoinGroupController extends Controller
 {
@@ -44,17 +45,20 @@ class JoinGroupController extends Controller
     }
 
     public function processMembershipApplication(Request $request, $ryhmaURINimi) {
+
         // POST request data must contain group id
         $input = $request->all();
 
         // Check uri and id point to same group
         $group = Targetgroup::findOrFail($input['groupID']);
         if ($group->getURIName() != $ryhmaURINimi) {
+
             return response('Unauthorized - URI name and groupID do not match', 403);
         }
 
         $validator = $this->validator($input);
         if ($validator->fails()) {
+
             return back()->withErrors($validator)->withInput();
         }
 
@@ -73,7 +77,13 @@ class JoinGroupController extends Controller
             'emailNotificationsOn' => 1,
             'isActivated' => $isActivated
         ]);
-        \Session::flash('operationsuccess', 'Tunnus luotu. Voit kirjautua sisään!');
+
+        if ($isActivated) {
+            $request->session()->flash('operationsuccess', 'Tunnus luotu! Voit nyt kirjautua ryhmään sisälle.');
+        } else {
+            $request->session()->flash('operationsuccess', 'Tunnus luotu! Kirjautuminen mahdollista heti kun ryhmän admin on hyväksynyt sinut ryhmään.');
+        }
+        
         return redirect('auth/login');
 
 

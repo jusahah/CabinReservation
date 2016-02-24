@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
     	));
     	//$me->targetgroup_id = 1;
     	$me->save();
-        factory('App\User', 20)->create();
+        //factory('App\User', 20)->create();
 
 
     }

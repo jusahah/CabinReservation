@@ -22,8 +22,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ReservationSeeder::class);
 
         $me = User::findOrFail(1);
-        $me->targetgroup_id = 1;
+        $me->targetgroup_id = 2;
+        $me->isActivated = true; // Auto-activate admin users
         $me->save();
+
+        $group = App\Targetgroup::find(2);
+        $group->user_id = $me->id;
+        $group->save();
 
         Model::reguard();
     }

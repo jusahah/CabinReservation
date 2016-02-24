@@ -32,7 +32,7 @@ class Targetgroup extends Model
     }
 
     public function autoJoin() {
-        return true; // For now
+        return false; // For now
     }
 
 }

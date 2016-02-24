@@ -14,5 +14,7 @@ class TargetSeeder extends Seeder
     	// Create 30 fake instances of targets
         factory('App\Target', 30)->create();
 
+
+
     }
 }

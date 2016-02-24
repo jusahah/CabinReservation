@@ -11,6 +11,15 @@ class ReservationSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Reservation', 10)->create();
+        //factory('App\Reservation', 10)->create();
+    	return;
+        $res = [
+	        'user_id' => 1,
+	        'original_user_id' => 1,
+	        'target_id' => rand(1,6),
+	        'startdate' => $faker->dateTimeThisMonth(),
+	        'enddate' => $faker->dateTimeThisMonth(),
+	        'notes' => $faker->paragraph
+    	];
     }
 }

@@ -19,7 +19,7 @@
 
 
     <h1 class="animated flipInX" style="text-align: center; font-size: 54px; margin-bottom: 0px;">Mökkivaraus.fi</h1>
-    <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px;"></h3>
+    <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px; width: 380px; margin: auto;"></h3>
 
 
         <form id="wrapper" method="POST" action="{{route('login')}}">
@@ -60,14 +60,7 @@
                     </div>
                     <input type="submit" value="Kirjaudu">
                 </div>
-                <div id="bottom">
-                    <div class="squared-check">
-                        <input type="checkbox" value="None" id="remember" name="check" checked="">
-                        <label for="remember"></label>
-                        <div class="cb-label">Muista minut</div>
-                    </div>
-                   <!-- <a class="right_a" href="#">Unohtuiko salasana?</a> -->
-                </div>
+
                 <p style="color: #F56B6B; margin: 8px; font-size: 10px; bottom: 8px; left: 10px; position: absolute;"></i>Copyright Nollaversio IT | 2016 | Proudly using Laravel 5.1.0</i></p>
             </div>
         </form>

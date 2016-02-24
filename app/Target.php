@@ -36,8 +36,9 @@ class Target extends Model
     	'allowTwoReservationsBySameUser' => 'integer|min:0|max:1',
     );
 
-    public function __construct() {
+    public function __construct($attributes = array()) {
         $this->today = date('Y-m-d');
+        parent::__construct($attributes);
     }
 
     public static function validationRules() {
