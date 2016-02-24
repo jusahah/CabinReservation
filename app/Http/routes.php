@@ -18,6 +18,10 @@ Route::get('/', function () {
 // Route to member registration into particular ryhma
 Route::get('/jasenyys/{ryhmaURINimi}', ['as' => 'haejasenyytta', 'uses' => 'JoinGroupController@requestMembership']);
 Route::post('/jasenyys/{ryhmaURINimi}', ['as' => 'hakemussisaan', 'uses' => 'JoinGroupController@processMembershipApplication']);
+
+// Admin creation
+Route::get('/admin/luo', ['as' => 'uusiadmin', 'uses' => 'GuestController@showAdminCreation']);
+Route::post('admin/uusiryhma', ['as' => 'luoryhma', 'uses' => 'GuestController@createGroup']);
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', ['as' => 'login', 'middleware' => 'checkIsActivated', 'uses' => 'Auth\AuthController@postLogin']);

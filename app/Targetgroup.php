@@ -9,6 +9,8 @@ class Targetgroup extends Model
 {
     //
 
+    protected $fillable = ['name', 'description', 'allowTwoReservationsInsideGroupBySameUser']; 
+
     public function admin() {
     	// We must fetch manually because relationship 
     	// could not be defined thanks to circular stuff etc

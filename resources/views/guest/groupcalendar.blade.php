@@ -1,35 +1,53 @@
-@extends('member/home')
-
-@section('pagename', 'Ryhmän etusivu | ' . $targetgroupname)
-
+<!DOCTYPE html>
+<html>
 
 
-@section('content')
+<head>
+<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+		<link href="{{asset('css/fullcalendar.css')}}" rel="stylesheet">
 
-
+		<!-- Font Awesome -->
+		<link href="{{asset('fonts/font-awesome.min.css')}}" rel="stylesheet">
+</head>
+<body>
 <div class="row no-gutter">
     <div class="col-md-12 col-sm-12 col-sx-12">
 			          <div class="panel">
 									<div class="panel-heading">
 
 										<div class="alert alert-danger" id="javascriptoff">Javascript-tuki vaaditaan!</div>
-										<ul class="links">
-											<li>
-											</li>
-										</ul>
+
 									</div>
 									<div class="panel-body">
-												<p><span class="label label-danger">HUOMIO!</span> Kalenteri näyttää kaikkien ryhmän kohteiden kaikki varaukset! Jos haluat tarkastella yksittäisen kohteen varaustilannetta, aloita sivuvalikon linkistä <i>Kohdeluettelo</i></p>
-
-										<div id='calendar' style="margin: auto;"></div>
+										<h3 style="text-align: center;">{{$group->name}}</h3>
+										<p style="text-align: center;">{{$group->description}}</p>
+										<hr>
+										<div id='calendar' style="margin: auto; max-width: 960px; max-height: 960px;"></div>
+										<hr style="width: 30%;">
+										<p style="text-align: center;"><i>Tämä on vieraille tarkoitettu näkymä kalenteriin. Jos haluat tehdä/muokata varauksia,
+										sinun täytyy olla <a href="{{url('auth/login')}}">kirjautuneena palveluun</a> ja hyväksytty kohteen jäseneksi. Vain ryhmän jäsenet voivat
+										tehdä varauksia.</i></p>
 									</div>
 					  </div>   
 	</div>
 </div>
-@endsection
 
+		<script src="{{asset('js/jquery.js')}}"></script>
 
-@section('customJS')
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="{{asset('js/bootstrap.min.js')}}"></script>
+
+		<!-- Flot Charts 
+		<script src="js/flot/jquery.flot.js"></script>
+		<script src="js/flot/jquery.flot.time.js"></script>
+		<script src="js/flot/jquery.flot.selection.js"></script>
+		<script src="js/flot/jquery.flot.resize.js"></script>
+		<script src="js/flot/jquery.flot.tooltip.js"></script>
+		<script src="js/flot/flot.excanvas.min.js"></script>
+		-->
+
+		<script src="{{asset('js/calendar/fullcalendar.min.js')}}"></script>
+
 
 <script>
 
@@ -125,7 +143,6 @@
 				right: 'month'
 			},
 			allDayDefault: true,
-			dayClick: dayClicked,
 			defaultDate: '2016-01-12',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
@@ -134,10 +151,10 @@
 			@foreach ($reservations as $reservation)
 
 				{
-					title: hideReserverNames && ('{{$reservation->startdate}}' === '{{$reservation->enddate}}') ? '{{$reservation->target->name}}'.substring(0,3) : '{{$reservation->target->name}}',
+					title: hideReserverNames && ('{{$reservation->startdate}}' === '{{$reservation->enddate}}') ? '{{$reservation->target->name}}'.substring(0,3) : '{{$reservation->target->name}} ({{$reservation->user->name}})',
 					start: '{{$reservation->startdate}}',
 					end: '{{$reservation->enddate}}',
-					url: '{{route("varausinfo", ["ryhmaID" => $global_ryhmaID, "kohdeID" => $reservation->target->id, "varausID" => $reservation->id])}}',
+					
 				},
 
 
@@ -150,4 +167,5 @@
 	});
 
 </script>
-@endsection
+</body>
+</html>

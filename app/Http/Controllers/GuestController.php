@@ -3,15 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException as ModelNotFoundException;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\Targetgroup;
+use App\User;
+
 
 class GuestController extends Controller
 {
     public function __construct(Request $r) {
         parent::__construct($r, false);
     } 
+
+    public function showAdminCreation(Request $request) {
+
+    	return view('guest/adminform');
+    	
+
+    }
+
+    public function createGroup(Request $request) {
+    	$input = $request->all();
+
+    	$validator = $this->validator($input);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        \DB::transaction(function() use ($input) {
+
+        	// Create fresh group
+	        $group = Targetgroup::create([
+	        	'name' => $input['ryhmanimi'],
+	        	'description' => $input['ryhmakuvaus'],
+	        	'allowTwoReservationsInsideGroupBySameUser' => 0
+	        ]);
+
+	        // Create corresponding admin user linked to that group
+	        $user = User::create([
+	            'name' => $input['name'],
+	            'email' => $input['email'],
+	            'password' => bcrypt($input['password']),
+	            'targetgroup_id' => $group->id,
+	            'isActivated' => 1,
+	            'emailNotificationsOn' => 1,
+	            'isActivated' => 1
+	        ]);
+
+	        // Link group to user by updating its user_id field
+	        $group->user_id = $user->id;
+	        $group->save();
+        });
+        $request->session()->flash('operationsuccess', 'Uusi ryhmä ja admin-käyttäjä luotu! Voit nyt kirjautua sisään juuri luomallasi käyttäjätunnuksella.');
+        return redirect('auth/login');
+
+
+    }
 
     protected function getAllReservationsInGroup($group) {
 
@@ -40,9 +88,9 @@ class GuestController extends Controller
             }
         }
 
-        if (!$correctTarget) return response('Kohdetta ei löytynyt', 404);
+        if (!$correctTarget) return response('Kohdetta ei löytynyt [Virhe: 001]', 404);
 
-        return view('guest/targetcalendar')->with('group', $group)->with('target', $correctTarget);
+        return view('guest/targetcalendar')->with('group', $group)->with('target', $correctTarget)->with('reservations', $target->reservations);
 
     }
 
@@ -59,7 +107,7 @@ class GuestController extends Controller
 
          foreach ($groups as $key => $group) {
              if ($ryhmaURINimi == $group->getURIName()) {
-                return $group->id;
+                return Targetgroup::findOrFail($group->id);
              }
          }
 
@@ -76,5 +124,18 @@ class GuestController extends Controller
          }
 
          throw new ModelNotFoundException();
+    } 
+
+    protected function validator(array $data)
+    {
+    	// Validation for new admin user input data
+        return \Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:4',
+            'ryhmanimi' => 'required|string|min:1|max:64',
+            'ryhmakuvaus' => 'string|max:512'
+        ]);
     }    
+
 }

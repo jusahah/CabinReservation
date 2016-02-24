@@ -161,8 +161,8 @@ class Target extends Model
     // Note that exactly same method as in Targetgroup model
     public function getURIName() {
 
-        // As two targets can have same name we need to attach ID 
-        $toBeSlugified = $this->name . " " . $this->id;
+        
+        $toBeSlugified = $this->name;
         return str_slug($toBeSlugified, "-");
 
     }    

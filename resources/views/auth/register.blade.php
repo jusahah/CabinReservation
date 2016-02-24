@@ -26,7 +26,7 @@
         <form method="POST" action="{{route('hakemussisaan', ['ryhmaURINimi' => $ryhmaURINimi])}}">
             {!! csrf_field() !!}
             <input type="hidden" name="groupID" value="{{$group->id}}">
-            <div id="box" class="">
+            <div id="box" class="" style="height: 470px;">
                 @if (count($errors) > 0)
                     <div class="alert alert-danger" style="background-color: #F56B6B; width: 320px; margin: auto;">
                         <ul style="list-style: none;">
