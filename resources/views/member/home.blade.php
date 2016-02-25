@@ -368,11 +368,13 @@
 		<!-- Dashboard Wrapper End -->
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="{{asset('js/daterange/moment.js')}}"></script>
+		
 		<script src="{{asset('js/jquery.js')}}"></script>
 
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>
+
+		<script src="{{asset('js/daterange/moment.js')}}"></script>
 
 		<!-- Flot Charts 
 		<script src="js/flot/jquery.flot.js"></script>

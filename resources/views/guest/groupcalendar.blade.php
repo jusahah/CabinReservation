@@ -47,7 +47,7 @@
 		-->
 
 		<script src="{{asset('js/calendar/fullcalendar.min.js')}}"></script>
-		<script src="{{asset('js/calendar/fi.js')}}"></script>
+
 
 
 <script>
@@ -147,6 +147,7 @@
 			defaultDate: '2016-01-12',
 			editable: true,
 			lang: 'fi',
+			firstDay: 1,
 			eventLimit: true, // allow "more" link when too many events
 			eventColor: '#354051',			
 			events: [
