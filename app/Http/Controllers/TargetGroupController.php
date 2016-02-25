@@ -34,6 +34,15 @@ class TargetGroupController extends Controller
             ->with('targets', $targets);
     }
 
+    public function showInvitationLink(Request $request, $ryhmaID) {
+
+        view()->share('currentpage', 'kutsujasen');
+        $group = Targetgroup::findOrFail($ryhmaID);
+
+        return view('member/invitation')->with('group', $group);
+
+    }
+
         // GET route
     public function showTargetCreation(Request $request, $ryhmaID) {
 

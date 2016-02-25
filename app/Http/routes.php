@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth', 'prefix' => 'member'], function () {
 
 		// Stuff only admin can do
 		Route::group(['middleware' => 'isTargetGroupAdmin'], function() {
+
+			Route::get('{ryhmaID}/kutsu', ['as' => 'kutsujasen', 'uses' => 'TargetGroupController@showInvitationLink']);
+
+
 			Route::get('{ryhmaID}/jasenhakemukset', ['as' => 'jasenhakemukset', 'uses' => 'TargetGroupController@showApplications']);
 			Route::get('{ryhmaID}/jasenhakemukset/{jasenID}/hyvaksy', ['as' => 'hyvaksyjasen', 'uses' => 'TargetGroupController@acceptApplication']);
 

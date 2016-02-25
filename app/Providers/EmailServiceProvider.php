@@ -76,11 +76,11 @@ class EmailServiceProvider extends ServiceProvider
         //
     }
     protected function buildNewReservationText(Reservation $reservation, Target $target) {
-        return "Varaus käyttäjältä " . $reservation->user->name . " kohteeseen " . $target->name . " aikavälille " . $reservation->startdate . " - " . $reservation->enddate;
+        return "Varaus käyttäjältä " . $reservation->user->name . " kohteeseen " . $target->name . " aikavälille " . date('d.m', strtotime($reservation->startdate)) . " - " . date('d.m', strtotime($reservation->enddate));
     
     }
     protected function buildCancelReservationText(Reservation $reservation, Target $target) {
-        return "Varaus peruttu: käyttäjä " . $reservation->user->name . " kohteeseen " . $target->name . " aikavälille " . $reservation->startdate . " - " . $reservation->enddate;
+        return "Varaus peruttu: käyttäjä " . $reservation->user->name . " kohteeseen " . $target->name . " aikavälille " . date('d.m', strtotime($reservation->startdate)) . " - " . date('d.m', strtotime($reservation->enddate));
     
     }
 }

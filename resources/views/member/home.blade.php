@@ -94,7 +94,8 @@
 							<div class="fs1" aria-hidden="true" data-icon="&#xe0f8;"></div>
 							<span>Jäsenhakemukset</span>
 						</a>
-					</li>	
+					</li>
+					
 					@endif				
 					<li>
 						<a href="{{route('logout')}}">
@@ -114,6 +115,12 @@
 					<div class="alert alert-warning" style="width: 100%; padding: 0px;">
 						<p style="color: white; padding: 12px;"><strong>Olet ryhmän admin!</strong></p>
 					</div>	
+					<div class="alert alert-danger" style="width: 100%; padding: 0px;">
+						<a href="{{route('kutsujasen', ['ryhmaID' => $global_ryhmaID])}}" style="color: white; width: 100%; height: 42px; display: block; padding: 12px; ">
+						
+							<span><strong>Kutsu uusi jäsen!</strong></span>
+						</a>
+					</div>						
 					@endif	
 					<div class="alert alert-info">
 						Ryhmässä on <strong>{{$groupmembercount}}</strong> @if($groupmembercount == 1) jäsen. @else jäsentä. @endif

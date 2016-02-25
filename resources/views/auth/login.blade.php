@@ -18,10 +18,12 @@
    
 
 
-    <h1 class="animated flipInX" style="text-align: center; font-size: 54px; margin-bottom: 0px;">Mökkivaraus.fi</h1>
+    <div style="height: 180px;">
+    <h1 class="animated flipInX" style="text-align: center; font-size: 54px; margin-bottom: 0px;">Varausmestari.fi</h1>
     <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px; width: 380px; margin: auto;"></h3>
-
-
+    </div>
+    <p style="text-align: center; color: white; font-size: 14px; margin-left: 48px; margin-right: 48px;">Jos olet jäsen jossain ryhmässä, voit kirjautua sisään alla. Jos et ole vielä jäsen, pyydä jäsenyyslinkki ryhmäsi adminilta. Tai voit ryhtyä itse
+    adminiksi luomalla uuden ryhmän ("Luo uusi admin-tunnus"-painike).</p> 
         <form id="wrapper" method="POST" action="{{route('login')}}">
             {!! csrf_field() !!}
 
@@ -71,7 +73,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
                 var siella = document.getElementById('siellaneon');
-                siella.innerHTML = 'Siellä ne mökit on.';
+                siella.innerHTML = 'Siellä ne varaukset on.';
                 siella.className = 'animated flipInX';
             }, 1500);
 

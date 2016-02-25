@@ -37,4 +37,8 @@ class Targetgroup extends Model
         return false; // For now
     }
 
+    public function getInvitationLink() {
+        return url() . '/jasenyys/' . $this->getURIName();
+    }
+
 }

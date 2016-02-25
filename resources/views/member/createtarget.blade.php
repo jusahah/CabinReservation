@@ -13,13 +13,13 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Kohteen nimi</label>
             
-            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+            <input type="text" name="name" placeholder="Vehmaan kesämökki" class="form-control" value="{{ old('name') }}">
         </div>
 
         <div class="form-group">
             <label for="exampleInputEmail1"> Kohteen kuvaus</label>
            
-            <input type="text" name="description" class="form-control" value="{{ old('description') }}">
+            <input type="text" name="description" placeholder="Hieno mökki keskellä pensaikkoa. Vesinäköala sateen sattuessa." class="form-control" value="{{ old('description') }}">
         </div>
         <hr>
         <div class="form-group">
@@ -57,6 +57,7 @@
 
 
         </div>
+        <!--
         <div class="form-group">
             <label for="exampleInputEmail1">Sähköposti-ilmoitus info-viestistä?</label>
             <p>Jos valitset vaihdoehdon "Kaikille jäsenille", sähköposti-ilmoitus lähetetään kaikille ryhmän jäsenille, jotka
@@ -70,16 +71,17 @@
 
 
         </div>
+        -->
         <hr>
         <div class="form-group">
             <label for="exampleInputEmail1">Varauksen minimikesto (päivissä)?</label>
-            <input type="number" name="minReservationLength" class="form-control" value="{{ old('minReservationLength') }}">
+            <input type="number" name="minReservationLength" placeholder="1" class="form-control" value="{{ old('minReservationLength') }}">
 
 
         </div>      
         <div class="form-group">
             <label for="exampleInputEmail1">Varauksen maksimikesto (päivissä)?</label>
-            <input type="number" name="maxReservationLength" class="form-control" value="{{ old('maxReservationLength') }}">
+            <input type="number" name="maxReservationLength" placeholder="7" class="form-control" value="{{ old('maxReservationLength') }}">
 
         </div>               
         <div>

@@ -18,7 +18,7 @@
    
 
     <div style="height: 180px;">
-    <h1 class="animated flipInY" style="text-align: center; font-size: 54px; margin-bottom: 0px; width: 480px; margin: auto; margin-top: 24px;">Mökkivaraus.fi</h1>
+    <h1 class="animated flipInY" style="text-align: center; font-size: 54px; margin-bottom: 0px; width: 480px; margin: auto; margin-top: 24px;">Varausmestari.fi</h1>
     <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px; width: 380px; margin: auto;"></h3>
     </div>
 
@@ -76,7 +76,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
                 var siella = document.getElementById('siellaneon');
-                siella.innerHTML = 'Siellä ne mökit on.';
+                siella.innerHTML = 'Siellä ne varaukset on.';
                 siella.className = 'animated flipInX';
             }, 1500);
 

@@ -28,8 +28,8 @@ class Target extends Model
     public static $rules = array(
     	'name' => 'required|string|min:1|max:64',
     	'description' => 'required|min:1|max:512',
-    	'maxReservationLength' => 'integer|max:365',
-    	'minReservationLength' => 'integer|max:365',
+    	'maxReservationLength' => 'required|integer|min:1|max:365',
+    	'minReservationLength' => 'required|integer|min:1|max:365',
     	'emailWhenSomebodyReserves' => 'integer|min:0|max:2',
     	'emailWhenSomebodyCancels' => 'integer|min:0|max:2',
     	'emailWhenGeneralAnnouncement' => 'integer|min:0|max:2',
