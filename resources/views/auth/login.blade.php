@@ -18,7 +18,7 @@
    
 
 
-    <div style="height: 180px;">
+    <div style="height: 120px;">
     <h1 class="animated flipInX" style="text-align: center; font-size: 54px; margin-bottom: 0px;">Varausmestari.fi</h1>
     <h3 id="siellaneon" style="color: #F56B6B; text-align: center; font-size: 32px; line-height: 32px; margin-top: 0px; width: 380px; margin: auto;"></h3>
     </div>
