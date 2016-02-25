@@ -204,6 +204,8 @@
 			dayClick: dayClicked,
 			defaultDate: '2016-01-12',
 			editable: true,
+			lang: 'fi',
+			firstDay: 1,
 			eventLimit: true, // allow "more" link when too many events
 			eventColor: '#354051',
 			events: [

@@ -368,6 +368,7 @@
 		<!-- Dashboard Wrapper End -->
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{{asset('js/daterange/moment.js')}}"></script>
 		<script src="{{asset('js/jquery.js')}}"></script>
 
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -384,6 +385,9 @@
 
 		<script src="{{asset('js/calendar/fullcalendar.min.js')}}"></script>
 
+		
+
+
 		<!-- Custom flot JS 
 		<script src="{{asset('js/flot/custom/combine-chart.js')}}"></script>-->
 
@@ -394,12 +398,14 @@
 		<script src="{{asset('js/tiny-scrollbar.js')}}"></script>
 
 		<!-- Date Range -->
-		<script src="{{asset('js/daterange/moment.js')}}"></script>
+		
 		<script src="{{asset('js/daterange/daterangepicker.js')}}"></script>
 
 		<!-- Custom JS -->
 		<script src="{{asset('js/custom.js')}}"></script>
 		<script src="{{asset('js/custom-index.js')}}"></script>
+
+
 
 		@yield('customJS')
 	</body>
