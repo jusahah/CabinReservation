@@ -9,6 +9,14 @@
 
 
     <div class="col-md-12 col-sm-12 col-sx-12">
+			        <div class="row no-gutter">
+			        	<div class="col-md-12 col-sm-12 col-sx-12">
+			        		<p style="font-style: italic; font-size: 12px;">
+			        		Voit varata tähän kohteeseen minimissään {{$target->minReservationLength}} päivän ja maksimissaan {{$target->maxReservationLength}} päivän varauksia. 
+			        		</p>	
+			        	</div>
+					
+					</div>    	
 
 			        <div class="row no-gutter">
 			          <div class="col-md-7 col-sm-7 col-sx-12">

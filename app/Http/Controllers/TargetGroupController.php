@@ -68,7 +68,7 @@ class TargetGroupController extends Controller
         view()->share('currentpage', 'loki'); // This route is one of the sidebar menu links
         return view('member/reservationlog')->with('reservations', $reservations);
     }
-
+    // Shows a list of pending group join requests
     public function showApplications(Request $request, $ryhmaID) {
 
         $group = Targetgroup::findOrFail($ryhmaID);

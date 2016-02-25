@@ -150,6 +150,7 @@ class ReservationController extends Controller
         try {
             \DB::transaction(function () use ($kohdeID, $input, $request, &$failed, &$varausID) {
                 // Check that there are no overlapping
+
                 $found = Reservation::where('target_id', $kohdeID)->where('enddate', '>=', $input['startdate'])->where('startDate', '<=', $input['enddate'])->first();
 
                 if ($found) {
@@ -166,12 +167,14 @@ class ReservationController extends Controller
                 $varausID    = $reservation->id; // Hack my life. We inject freshly-created reservation's id to outer call frame.
             });
         } catch (\Exception $e) {
+            ($e);
             $failed = true;
         }
 
         // Very hacky.
         if (!$failed) {
             // Success
+            //$this->sendReservationDoneEmails($reservation);
             $request->session()->flash('operationsuccess', 'Olet onnistuneesti tehnyt varauksen! Varauksen tiedot alla.'); 
             return redirect()->route('varausinfo', ['ryhmaID' => $ryhmaID, 'kohdeID' => $kohdeID, 'varausID' => $varausID]);
 
@@ -183,6 +186,32 @@ class ReservationController extends Controller
 
 
     }
+    // We use model events instead so emails are being sent from elsewhere everytime model event is triggered!
+    /*
+    protected function sendEmailOfReservationToAdmin(Reservation $reservation, Target $target) {
+        $admin = User::findOrFail($target->user_id);
+        // Check if admin wants to receive emails
+        if ($admin->emailNotificationsOn) {
+            // yes he does
+
+        }
+    }
+
+    protected function sendReservationDoneEmails(Reservation $reservation) {
+
+        $target = $reservation->target;
+
+        if ($target->emailWhenSomebodyReserves == 1) {
+            // Only to admin
+            $this->sendEmailOfReservationToAdmin($reservation, $target); 
+        } else if($target->emailWhenSomebodyReserves == 2) {
+            $this->sendEmailOfReservationToAll($reservation, $target); 
+        } 
+
+        // Else to nobody
+        return true;
+    }
+    */
 
     public function deleteReservation(Request $request, $ryhmaID, $kohdeID, $varausID) {
         // We want to ensure user owns this reservation
